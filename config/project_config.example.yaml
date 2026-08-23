@@ -1,0 +1,14 @@
+# Copy this file to project_config.yaml and replace paths with local values.
+# Never commit clinical tables, medical images, masks, or patient-level outputs.
+PROJECT_ROOT: "C:/path/to/inner-ear-project"
+CLINICAL_TABLE: "C:/path/to/private/clinical_table.xlsx"
+SEGMENTATION_ROOT: "C:/path/to/private/segmentations"
+SEGMENTATION_BATCHES:
+  - "batch_1"
+  - "batch_2"
+  - "batch_3"
+IMAGE_ROOT: "C:/path/to/private/images"
+PEBM_PAPER: "C:/path/to/reference/pebm-neuroimage.pdf"
+OUTPUT_ROOT: "C:/path/to/inner-ear-project/results_md_progression"
+RANDOM_SEEDS: [20260713, 20260714, 20260715]
+

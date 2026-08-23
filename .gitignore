@@ -1,0 +1,73 @@
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local agent/runtime state
+.agents/
+.codex/
+tmp/
+*.log
+*.pid
+
+# Private local configuration (commit only the example)
+config/project_config.yaml
+
+# Clinical/imaging source data and generated outputs
+data/
+analysis_out/
+results_md_progression/
+seg3/
+seg4/
+xjj内耳分割/
+xjj内耳分割2/
+
+# Medical images, masks, model artifacts, and archives
+*.dcm
+*.nii
+*.nii.gz
+*.nrrd
+*.mha
+*.mhd
+*.npz
+*.npy
+*.pt
+*.pth
+*.ckpt
+*.pkl
+*.pickle
+*.joblib
+*.rar
+*.zip
+*.7z
+
+# Patient-level tables and document exports
+*.csv
+*.tsv
+*.xls
+*.xlsx
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.pdf
+
+# Images may contain patient-derived screenshots or identifiers
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+*.bmp
+*.webp
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+

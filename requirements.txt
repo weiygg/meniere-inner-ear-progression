@@ -1,0 +1,15 @@
+numpy==1.26.4
+pandas==2.2.3
+scipy==1.13.1
+matplotlib==3.9.2
+scikit-learn==1.5.2
+scikit-image==0.24.0
+nibabel==5.3.2
+SimpleITK==2.5.2
+openpyxl==3.1.5
+python-docx==1.2.0
+PyYAML==6.0.2
+pytest==8.3.5
+psutil==6.1.1
+tqdm==4.67.1
+
