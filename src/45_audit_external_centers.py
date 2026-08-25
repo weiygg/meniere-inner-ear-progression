@@ -10,11 +10,11 @@ import SimpleITK as sitk
 
 
 GROUP_TO_CENTER = {
-    "浙二1-1": "center2",
-    "浙二1-2": "center2",
-    "浙二2-1": "center3",
-    "浙二2-2": "center3",
-    "浙二2例新": "center3",
+    "external_validation_1/extracted/浙二1-1": "external_validation_1",
+    "external_validation_1/extracted/浙二1-2": "external_validation_1",
+    "external_validation_2/extracted/浙二2-1": "external_validation_2",
+    "external_validation_2/extracted/浙二2-2": "external_validation_2",
+    "external_validation_2/extracted/浙二2例新": "external_validation_2",
 }
 
 META_TAGS = {
@@ -56,8 +56,8 @@ def write_csv(path: Path, rows: list[dict[str, object]]) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Audit center2/center3 DICOM cohorts without modifying source data.")
-    parser.add_argument("--data-root", type=Path, default=Path("data"))
+    parser = argparse.ArgumentParser(description="Audit external-validation DICOM cohorts without modifying source data.")
+    parser.add_argument("--data-root", type=Path, default=Path("data/centers"))
     parser.add_argument(
         "--output-dir",
         type=Path,
@@ -67,8 +67,9 @@ def main() -> None:
 
     rows: list[dict[str, object]] = []
     errors: list[dict[str, str]] = []
-    for group_name, center in GROUP_TO_CENTER.items():
-        group_dir = args.data_root / group_name
+    for group_path, center in GROUP_TO_CENTER.items():
+        group_dir = args.data_root / group_path
+        group_name = group_dir.name
         if not group_dir.is_dir():
             errors.append({"source_group": group_name, "study_id": "", "error": "missing_group_directory"})
             continue
@@ -102,13 +103,13 @@ def main() -> None:
 
     summary: dict[str, object] = {
         "center_definition": {
-            "center2": ["浙二1-1", "浙二1-2"],
-            "center3": ["浙二2-1", "浙二2-2", "浙二2例新"],
+            "external_validation_1": ["浙二1-1", "浙二1-2"],
+            "external_validation_2": ["浙二2-1", "浙二2-2", "浙二2例新"],
         },
         "interpretation": (
-            "The Lishui development cohort is center1. The reorganized Zhejiang Second Hospital "
-            "batches prefixed 浙二1 and 浙二2 are treated as center2 and center3, respectively, "
-            "pending confirmation by DICOM acquisition metadata and linkage to the clinical workbook."
+            "Lishui is the primary development center. The Zhejiang Second Hospital batches "
+            "prefixed 浙二1 and 浙二2 are frozen as external validation 1 and 2, respectively. "
+            "They are separate validation strata and are not asserted to be independent hospitals."
         ),
         "centers": {},
         "errors": len(errors),

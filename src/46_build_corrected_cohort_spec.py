@@ -141,7 +141,7 @@ def main() -> None:
     write_csv(args.output_dir / "audit" / "external_center_clinical_linkage.csv", linkage_rows)
 
     center_summary: dict[str, object] = {}
-    for center in ("center2", "center3"):
+    for center in ("external_validation_1", "external_validation_2"):
         subset = [row for row in linkage_rows if row["center"] == center]
         center_summary[center] = {
             "imaging_studies": len(subset),
@@ -188,21 +188,21 @@ def main() -> None:
 ## 队列
 
 - 开发队列：丽水 400 耳，仅用于分割模型训练、验证和内部测试，所有划分按患者完成。
-- 外部队列 1（center2）：`浙二1-1` + `浙二1-2`，当前 {center_summary['center2']['imaging_studies']} 次影像/{center_summary['center2']['imaging_ears']} 耳。
-- 外部队列 2（center3）：`浙二2-1` + `浙二2-2` + `浙二2例新`，当前 {center_summary['center3']['imaging_studies']} 次影像/{center_summary['center3']['imaging_ears']} 耳。
-- center2 和 center3 均来自浙二，因此是相对丽水的两个预先分层外部影像队列，不表述为两个独立医院。
+- 外部验证 1：`浙二1-1` + `浙二1-2`，当前 {center_summary['external_validation_1']['imaging_studies']} 次影像/{center_summary['external_validation_1']['imaging_ears']} 耳。
+- 外部验证 2：`浙二2-1` + `浙二2-2` + `浙二2例新`，当前 {center_summary['external_validation_2']['imaging_studies']} 次影像/{center_summary['external_validation_2']['imaging_ears']} 耳。
+- 两个外部验证组均来自浙二，是相对丽水的两个预先分层外部影像队列，不表述为两个独立医院。
 
 ## 分割与外部验证
 
 - T2 分割目标：Cochlear、Vestibular、SSC、HSC、PSC、TV。各标签允许重叠，缺失标注不作阴性。
 - REAL 分割目标：ELS；当前浙二目录仅发现 T2 DICOM，故 ELS 不能在 center2/center3 推理或验证，除非补充对应 REAL 图像。
-- 冻结模型后分别对 center2、center3 推理。自动 mask 可用于后续特征提取前的人工 QC；若要报告外部 Dice/HD95，每个外部队列必须另有人工参考 mask。
+- 冻结模型后分别对外部验证 1、外部验证 2 推理。自动 mask 可用于后续特征提取前的人工 QC；若要报告外部 Dice/HD95，每个外部队列必须另有人工参考 mask。
 
 ## 监督预测
 
 - 独立建立影像特征模型、临床模型和影像+临床融合模型。
 - AAO-HNS stage 是预测终点之一，绝不作为预测它自身的输入。
-- 所有缺失值处理、标准化、特征筛选、阈值选择均只在丽水/训练折内拟合，center2 和 center3 不参与调参。
+- 所有缺失值处理、标准化、特征筛选、阈值选择均只在丽水/训练折内拟合，外部验证 1 和 2 不参与调参。
 
 ## P-EBM
 

@@ -16,11 +16,18 @@ tmp/
 
 # Private local configuration (commit only the example)
 config/project_config.yaml
+configs/analysis.yaml
 
 # Clinical/imaging source data and generated outputs
-data/
+# Keep protected data local; only explicitly de-identified metadata manifests are tracked.
+data/*
+!data/README.md
+!data/manifests/
+!data/manifests/*.csv
+!data/manifests/*.json
 analysis_out/
 results_md_progression/
+results/
 seg3/
 seg4/
 xjj内耳分割/
@@ -65,9 +72,12 @@ xjj内耳分割2/
 *.bmp
 *.webp
 
+# Explicitly allow de-identified audit metadata after the global table rules above.
+!data/manifests/*.csv
+!data/manifests/*.json
+
 # OS/editor files
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
-

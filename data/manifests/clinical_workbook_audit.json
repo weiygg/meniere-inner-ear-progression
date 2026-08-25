@@ -1,0 +1,280 @@
+{
+  "source_name": "MD患者评估20260713.xlsx",
+  "bytes": 73210,
+  "sha256": "5a25d6746a31fc19c9f3c7c76b0ca16d1e96afd3a0d3c96c2188c377c9aebb72",
+  "phi_status": "direct_identifiers_present",
+  "included_in_git": false,
+  "sheets": [
+    {
+      "sheet_index": 1,
+      "sheet_name": "丽水",
+      "data_rows": 158,
+      "columns": 13,
+      "headers": [
+        "ID",
+        "姓名",
+        "age",
+        "sex",
+        "side",
+        "CochEH",
+        "VestEH",
+        "stage（AAO-HNS）",
+        "0.5kHZ",
+        "1kHZ",
+        "2kHZ",
+        "3kHZ",
+        "PTA"
+      ],
+      "direct_identifier_headers": [
+        "姓名"
+      ],
+      "id_summary": {
+        "nonmissing_n": 79,
+        "unique_n": 79
+      },
+      "side_value_counts": {
+        "L": 79,
+        "R": 79
+      },
+      "numeric_column_summary": {
+        "0.5kHZ": {
+          "nonmissing_n": 112,
+          "min": 10.0,
+          "max": 105.0
+        },
+        "1kHZ": {
+          "nonmissing_n": 112,
+          "min": 0.0,
+          "max": 115.0
+        },
+        "2kHZ": {
+          "nonmissing_n": 112,
+          "min": 0.0,
+          "max": 120.0
+        },
+        "3kHZ": {
+          "nonmissing_n": 112,
+          "min": 5.0,
+          "max": 115.0
+        },
+        "CochEH": {
+          "nonmissing_n": 158,
+          "min": 0.0,
+          "max": 2.0
+        },
+        "PTA": {
+          "nonmissing_n": 0,
+          "min": null,
+          "max": null
+        },
+        "VestEH": {
+          "nonmissing_n": 158,
+          "min": 0.0,
+          "max": 3.0
+        },
+        "stage（AAO-HNS）": {
+          "nonmissing_n": 56,
+          "min": 1.0,
+          "max": 4.0
+        }
+      },
+      "pta_0.5_1_2_3khz_audit": {
+        "four_frequency_complete_rows": 112,
+        "pta_formula_rows": 112,
+        "pta_formula_matches_0.5_1_2_3khz_columns": 112,
+        "stored_numeric_pta_rows": 0,
+        "stored_numeric_pta_matches_within_1e-6": 0,
+        "max_absolute_difference_for_stored_numeric_pta": null
+      },
+      "has_4khz_column": false,
+      "date_ranges": {},
+      "formula_count": 112,
+      "cached_formula_error_count": 0
+    },
+    {
+      "sheet_index": 2,
+      "sheet_name": "浙二MD",
+      "data_rows": 112,
+      "columns": 37,
+      "headers": [
+        "患者姓名",
+        "电话",
+        "编号",
+        "MD1,SD2,其他3",
+        "起病时间",
+        "病案号",
+        "性别（男=1，女=2）",
+        "出生日期",
+        "扫描日期",
+        "年龄",
+        "身高cm",
+        "体重kg",
+        "教育年限y",
+        "利手（右=0，左=1）",
+        "MMSE",
+        "HADS（≥12 +）",
+        "DHI-F",
+        "DHI-E",
+        "DHI-P",
+        "DHI-T",
+        "VADL",
+        "UCLA-DQ",
+        "EEV",
+        "MoCA",
+        "HIT-6",
+        "MIDAS",
+        "PSQI",
+        "THI",
+        "耳闷",
+        "内耳检查结果",
+        "半规管显影",
+        "前庭导水管显影",
+        "纯音听阈报告",
+        "声导抗",
+        "前庭试验",
+        "其他",
+        ""
+      ],
+      "direct_identifier_headers": [
+        "出生日期",
+        "患者姓名",
+        "扫描日期",
+        "电话",
+        "病案号"
+      ],
+      "id_summary": {},
+      "side_value_counts": {},
+      "numeric_column_summary": {},
+      "pta_0.5_1_2_3khz_audit": {
+        "four_frequency_complete_rows": 0,
+        "pta_formula_rows": 0,
+        "pta_formula_matches_0.5_1_2_3khz_columns": 0,
+        "stored_numeric_pta_rows": 0,
+        "stored_numeric_pta_matches_within_1e-6": 0,
+        "max_absolute_difference_for_stored_numeric_pta": null
+      },
+      "has_4khz_column": false,
+      "date_ranges": {
+        "起病时间": {
+          "min": null,
+          "max": null,
+          "nonmissing_n": 0
+        },
+        "扫描日期": {
+          "min": "2023-01-07",
+          "max": "2026-06-28",
+          "nonmissing_n": 112
+        }
+      },
+      "formula_count": 0,
+      "cached_formula_error_count": 0
+    },
+    {
+      "sheet_index": 3,
+      "sheet_name": "浙二",
+      "data_rows": 206,
+      "columns": 23,
+      "headers": [
+        "ID",
+        "病案号",
+        "姓名",
+        "age",
+        "sex",
+        "side",
+        "CochEH",
+        "VestEH",
+        "VA",
+        "ES/ED",
+        "stage（AAO-HNS）",
+        "0.5kHZ",
+        "1kHZ",
+        "2kHZ",
+        "3kHZ",
+        "PTA",
+        "DHI-F",
+        "DHI-E",
+        "DHI-P",
+        "DHI-T",
+        "THI",
+        "耳闷",
+        "VADL"
+      ],
+      "direct_identifier_headers": [
+        "姓名",
+        "病案号"
+      ],
+      "id_summary": {
+        "nonmissing_n": 103,
+        "unique_n": 103
+      },
+      "side_value_counts": {
+        "L": 103,
+        "R": 103
+      },
+      "numeric_column_summary": {
+        "0.5kHZ": {
+          "nonmissing_n": 194,
+          "min": 0.0,
+          "max": 105.0
+        },
+        "1kHZ": {
+          "nonmissing_n": 194,
+          "min": 0.0,
+          "max": 100.0
+        },
+        "2kHZ": {
+          "nonmissing_n": 194,
+          "min": 0.0,
+          "max": 100.0
+        },
+        "3kHZ": {
+          "nonmissing_n": 194,
+          "min": 0.0,
+          "max": 100.0
+        },
+        "CochEH": {
+          "nonmissing_n": 206,
+          "min": 0.0,
+          "max": 2.0
+        },
+        "ES/ED": {
+          "nonmissing_n": 206,
+          "min": 0.0,
+          "max": 2.0
+        },
+        "PTA": {
+          "nonmissing_n": 2,
+          "min": 10.0,
+          "max": 55.0
+        },
+        "VA": {
+          "nonmissing_n": 206,
+          "min": 0.0,
+          "max": 2.0
+        },
+        "VestEH": {
+          "nonmissing_n": 206,
+          "min": 0.0,
+          "max": 3.0
+        },
+        "stage（AAO-HNS）": {
+          "nonmissing_n": 97,
+          "min": 1.0,
+          "max": 4.0
+        }
+      },
+      "pta_0.5_1_2_3khz_audit": {
+        "four_frequency_complete_rows": 194,
+        "pta_formula_rows": 192,
+        "pta_formula_matches_0.5_1_2_3khz_columns": 192,
+        "stored_numeric_pta_rows": 2,
+        "stored_numeric_pta_matches_within_1e-6": 2,
+        "max_absolute_difference_for_stored_numeric_pta": 0.0
+      },
+      "has_4khz_column": false,
+      "date_ranges": {},
+      "formula_count": 192,
+      "cached_formula_error_count": 0
+    }
+  ]
+}

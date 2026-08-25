@@ -1,0 +1,17 @@
+project:
+  data_root_env: INNER_EAR_DATA_DIR
+  protected_data_required: true
+
+execution:
+  phase: audit
+  stop_after: checkpoint_01
+  random_seed: 20260824
+
+privacy:
+  export_patient_level_data: false
+  export_absolute_paths: false
+  export_dicom_metadata: false
+
+pebm:
+  upstream_commit: ffbe8a969b2947769098f1f4e6099edb32f36b97
+  run_clinical_model: false

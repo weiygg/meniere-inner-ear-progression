@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "applied": true,
+  "generated_local": "2026-08-24T20:02:56+08:00",
+  "center_split_config": "configs/center_split.yaml",
+  "safety": {
+    "raw_source_content_deleted": false,
+    "valid_frozen_external_validation_deleted": false,
+    "exact_duplicate_hash_required_before_deletion": true,
+    "all_paths_workspace_bounded": true
+  },
+  "totals": {
+    "actions": 26,
+    "deleted_files": 64,
+    "deleted_bytes": 1329338887,
+    "moved_files": 13190,
+    "moved_bytes": 21960893731
+  },
+  "actions": [
+    {
+      "action": "delete_exact_duplicate",
+      "source": "中心2外部验证1.rar",
+      "destination": "data/centers/external_validation_1/reference_masks/中心2外部验证1.rar",
+      "files": 1,
+      "bytes": 665318145,
+      "sha256": "4c85b08b0da171d220ba5d8bd324bc96b9ee921d989204baf104e21e50aa4853",
+      "reason": "Byte-identical root duplicate; protected data copy retained.",
+      "status": "deleted",
+      "recoverability": "fully_recoverable_from_retained_copy"
+    },
+    {
+      "action": "delete_exact_duplicate",
+      "source": "中心3外部验证2.rar",
+      "destination": "data/centers/external_validation_2/reference_masks/中心3外部验证2.rar",
+      "files": 1,
+      "bytes": 644363886,
+      "sha256": "d199edd25dbf7490c9959bedf739859339c0b0760be1eb7e54a3c32777fdba56",
+      "reason": "Byte-identical root duplicate; protected data copy retained.",
+      "status": "deleted",
+      "recoverability": "fully_recoverable_from_retained_copy"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "MD患者评估20260713.xlsx",
+      "destination": "data/clinical/MD患者评估20260713.xlsx",
+      "files": 1,
+      "bytes": 73210,
+      "sha256": "5a25d6746a31fc19c9f3c7c76b0ca16d1e96afd3a0d3c96c2188c377c9aebb72",
+      "reason": "Protected mixed-center clinical source moved under the protected data boundary.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/丽水-xjj内耳分割4.rar",
+      "destination": "data/centers/primary_lishui/raw_archives/丽水-xjj内耳分割4.rar",
+      "files": 1,
+      "bytes": 4214965289,
+      "sha256": "557277832f2b65d65315093bbbc47974129be980e98e175efc9996bd0ba9aa04",
+      "reason": "Primary Lishui development archive.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/丽水-xjj内耳分割4",
+      "destination": "data/centers/primary_lishui/extracted/丽水-xjj内耳分割4",
+      "files": 1959,
+      "bytes": 4271756346,
+      "sha256": null,
+      "reason": "Primary Lishui extracted development data.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/浙二1-1.rar",
+      "destination": "data/centers/external_validation_1/raw_archives/浙二1-1.rar",
+      "files": 1,
+      "bytes": 718588258,
+      "sha256": "c3c09f65399f66d1a40b39aead83748deee8eaf4679a8f8904ca7055d03b3782",
+      "reason": "Frozen external validation 1 source batch.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/浙二1-2.rar",
+      "destination": "data/centers/external_validation_1/raw_archives/浙二1-2.rar",
+      "files": 1,
+      "bytes": 432379194,
+      "sha256": "e9e79e87725b0a1d2c8066b7ded75859f40778b95f02082f33bc5360c0fbd9f0",
+      "reason": "Frozen external validation 1 source batch.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/中心2外部验证1.rar",
+      "destination": "data/centers/external_validation_1/reference_masks/中心2外部验证1.rar",
+      "files": 1,
+      "bytes": 665318145,
+      "sha256": "4c85b08b0da171d220ba5d8bd324bc96b9ee921d989204baf104e21e50aa4853",
+      "reason": "Manual reference masks for external validation 1.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/浙二1-1",
+      "destination": "data/centers/external_validation_1/extracted/浙二1-1",
+      "files": 2304,
+      "bytes": 724645178,
+      "sha256": null,
+      "reason": "Extracted external validation 1 imaging.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/浙二1-2",
+      "destination": "data/centers/external_validation_1/extracted/浙二1-2",
+      "files": 1368,
+      "bytes": 437060756,
+      "sha256": null,
+      "reason": "Extracted external validation 1 imaging.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/浙二2-1.rar",
+      "destination": "data/centers/external_validation_2/raw_archives/浙二2-1.rar",
+      "files": 1,
+      "bytes": 560870449,
+      "sha256": "453d4f291772d1df6464b581b43c19e0d384d50a58658b505ea2817f23ed10bf",
+      "reason": "Frozen external validation 2 source batch.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/浙二2-2.rar",
+      "destination": "data/centers/external_validation_2/raw_archives/浙二2-2.rar",
+      "files": 1,
+      "bytes": 324071777,
+      "sha256": "01b14daf8a2bbfbb6bf682767ce70fae97979dc8f775aaba5f08f0bd0c8fe727",
+      "reason": "Frozen external validation 2 source batch.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/浙二2例新.rar",
+      "destination": "data/centers/external_validation_2/raw_archives/浙二2例新.rar",
+      "files": 1,
+      "bytes": 52412118,
+      "sha256": "8cd83254e72032c3d0a83bd1f85e8474e7fa686869c0ede43a5080179f351afd",
+      "reason": "Frozen external validation 2 addendum.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/中心3外部验证2.rar",
+      "destination": "data/centers/external_validation_2/reference_masks/中心3外部验证2.rar",
+      "files": 1,
+      "bytes": 644363886,
+      "sha256": "d199edd25dbf7490c9959bedf739859339c0b0760be1eb7e54a3c32777fdba56",
+      "reason": "Manual reference masks for external validation 2.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/浙二2-1",
+      "destination": "data/centers/external_validation_2/extracted/浙二2-1",
+      "files": 1800,
+      "bytes": 566261218,
+      "sha256": null,
+      "reason": "Extracted external validation 2 imaging.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/浙二2-2",
+      "destination": "data/centers/external_validation_2/extracted/浙二2-2",
+      "files": 1079,
+      "bytes": 333331762,
+      "sha256": null,
+      "reason": "Extracted external validation 2 imaging.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "move_protected_data",
+      "source": "data/浙二2例新",
+      "destination": "data/centers/external_validation_2/extracted/浙二2例新",
+      "files": 144,
+      "bytes": 52941318,
+      "sha256": null,
+      "reason": "Extracted external validation 2 imaging addendum.",
+      "status": "moved",
+      "recoverability": "retained_at_destination"
+    },
+    {
+      "action": "archive_legacy_tree",
+      "source": "xjj内耳分割",
+      "destination": "archive/legacy/segmentation_versions/xjj内耳分割",
+      "files": 835,
+      "bytes": 1265950246,
+      "sha256": null,
+      "reason": "Older segmentation/geometry tree; authority unresolved.",
+      "status": "moved",
+      "recoverability": "retained_in_archive"
+    },
+    {
+      "action": "archive_legacy_tree",
+      "source": "xjj内耳分割2",
+      "destination": "archive/legacy/segmentation_versions/xjj内耳分割2",
+      "files": 1885,
+      "bytes": 2786701273,
+      "sha256": null,
+      "reason": "Older segmentation/geometry tree; authority unresolved.",
+      "status": "moved",
+      "recoverability": "retained_in_archive"
+    },
+    {
+      "action": "archive_legacy_tree",
+      "source": "seg3",
+      "destination": "archive/legacy/segmentation_versions/seg3",
+      "files": 1807,
+      "bytes": 3909203308,
+      "sha256": null,
+      "reason": "Superseded segmentation/geometry tree; seg4 remains active candidate.",
+      "status": "moved",
+      "recoverability": "retained_in_archive"
+    },
+    {
+      "action": "delete_obsolete_analysis",
+      "source": "results_md_progression/final/clinical_pebm_external_validation_20260731",
+      "destination": null,
+      "files": 21,
+      "bytes": 3128716,
+      "sha256": null,
+      "reason": "Obsolete affected-ear proxy; explicitly rejected for final inference.",
+      "status": "deleted",
+      "recoverability": "not_locally_recoverable_regenerable_from_preserved_code_and_sources"
+    },
+    {
+      "action": "delete_obsolete_analysis",
+      "source": "results_md_progression/final/clinical_pebm_z2_development_20260801",
+      "destination": null,
+      "files": 12,
+      "bytes": 2181027,
+      "sha256": null,
+      "reason": "Reversed-center clinical pilot with the same rejected affected-ear proxy.",
+      "status": "deleted",
+      "recoverability": "not_locally_recoverable_regenerable_from_preserved_code_and_sources"
+    },
+    {
+      "action": "delete_obsolete_analysis",
+      "source": "results_md_progression/final/patient_level_md_pebm_20260801",
+      "destination": null,
+      "files": 8,
+      "bytes": 97956,
+      "sha256": null,
+      "reason": "Exploratory worse-ear/symptom-event P-EBM inconsistent with the current protocol.",
+      "status": "deleted",
+      "recoverability": "not_locally_recoverable_regenerable_from_preserved_code_and_sources"
+    },
+    {
+      "action": "delete_obsolete_analysis",
+      "source": "results_md_progression/intermediate/external_manual_validation_20260817_aborted_slow_run",
+      "destination": null,
+      "files": 1,
+      "bytes": 2559,
+      "sha256": null,
+      "reason": "Aborted incomplete validation run.",
+      "status": "deleted",
+      "recoverability": "not_locally_recoverable_regenerable_from_preserved_code_and_sources"
+    },
+    {
+      "action": "delete_obsolete_analysis",
+      "source": "results_md_progression/intermediate/external_manual_validation_20260817_pre_override_qc_invalid",
+      "destination": null,
+      "files": 20,
+      "bytes": 14246598,
+      "sha256": null,
+      "reason": "Invalid pre-override QC run superseded by frozen final validation.",
+      "status": "deleted",
+      "recoverability": "not_locally_recoverable_regenerable_from_preserved_code_and_sources"
+    },
+    {
+      "action": "delete_obsolete_analysis",
+      "source": "results_md_progression/intermediate/external_manual_override_inference_20260817_failed_geometry",
+      "destination": null,
+      "files": 0,
+      "bytes": 0,
+      "sha256": null,
+      "reason": "Empty failed-geometry output directory.",
+      "status": "deleted",
+      "recoverability": "not_locally_recoverable_regenerable_from_preserved_code_and_sources"
+    }
+  ]
+}

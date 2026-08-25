@@ -23,7 +23,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--data-dir",
         type=Path,
-        default=Path("data/丽水-xjj内耳分割4/xjj内耳分割2"),
+        default=Path(
+            "data/centers/primary_lishui/extracted/丽水-xjj内耳分割4/xjj内耳分割2"
+        ),
     )
     parser.add_argument(
         "--canal-manifest",

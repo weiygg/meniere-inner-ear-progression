@@ -1,0 +1,11 @@
+{
+  "generated_at": "2026-08-24T18:27:00+08:00",
+  "branch": "codex/restructure-pebm-v1",
+  "commit": "625bb13b6afb7221d07d39c25d31e740b4811657",
+  "git_status_porcelain": "M .gitignore\n?? data/\n?? scripts/",
+  "tracked_file_count": 86,
+  "audited_artifact_count": 445,
+  "exact_duplicate_group_count": 32,
+  "near_duplicate_group_count": 75,
+  "safety": "No patient rows or DICOM metadata exported."
+}

@@ -1,0 +1,48 @@
+version: 1
+split_unit: patient
+split_status: frozen_for_workspace_organization
+
+primary_development:
+  center_id: primary_lishui
+  display_name: 丽水主中心
+  role: training_internal_validation
+  protected_root: data/centers/primary_lishui
+  source_groups:
+    - 丽水-xjj内耳分割4
+  expected_imaging_people: 200
+  expected_imaging_ears: 400
+
+external_validation_1:
+  center_id: external_validation_1
+  display_name: 外部验证1
+  role: frozen_external_test_only
+  protected_root: data/centers/external_validation_1
+  source_groups:
+    - 浙二1-1
+    - 浙二1-2
+  manual_reference_archive: 中心2外部验证1.rar
+  prior_audit_imaging_studies: 51
+
+external_validation_2:
+  center_id: external_validation_2
+  display_name: 外部验证2
+  role: frozen_external_test_only
+  protected_root: data/centers/external_validation_2
+  source_groups:
+    - 浙二2-1
+    - 浙二2-2
+    - 浙二2例新
+  manual_reference_archive: 中心3外部验证2.rar
+  prior_audit_imaging_studies: 43
+
+constraints:
+  patient_level_split: true
+  external_data_used_for_training: false
+  external_data_used_for_model_selection: false
+  external_data_used_for_threshold_selection: false
+  external_data_used_for_feature_selection: false
+  report_external_groups_separately: true
+  interpretation: >-
+    External validation 1 and 2 are prespecified Zhejiang Second Hospital imaging
+    groups. They are separate validation strata, not asserted to be two independent
+    hospitals.
