@@ -46,6 +46,8 @@ Only the following de-identified metadata are tracked:
 - duplicate/near-duplicate manifests;
 - aggregate workbook audit JSON.
 - aggregate center-split and workspace-reorganization manifests.
+- schema-only clinical feature dictionary (`clinical_feature_schema.json/.xlsx`),
+  containing field definitions but no patient rows or values.
 
 Future `data/interim/` and `data/processed/` products remain local by default. A file
 may be committed only after an explicit disclosure-control review confirms that it

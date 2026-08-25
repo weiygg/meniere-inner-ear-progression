@@ -18,6 +18,7 @@ before cohort, index-ear, variable-role, and event-state adjudication.
 - [Checkpoint report](docs/CHECKPOINT_01_AUDIT.md)
 - [Aggregate hearing-rule sensitivity audit](reports/01_hearing_ear_rule_sensitivity.md)
 - [Workspace cleanup log](docs/CLEANUP_LOG.md)
+- [Clinical feature data dictionary](docs/DATA_DICTIONARY.md)
 - [Protected-data policy](data/README.md)
 
 The hearing-rule audit is exploratory: it does not freeze the affected-ear
