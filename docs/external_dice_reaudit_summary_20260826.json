@@ -1,0 +1,44 @@
+{
+  "date": "2026-08-26",
+  "endpoint": "SSC/HSC/PSC segmentation",
+  "external_sample": {
+    "patients": 50,
+    "ears": 100,
+    "masks": 300
+  },
+  "formal_frozen_external": {
+    "macro_dice": 0.6687820707665615,
+    "macro_dice_ci95": [0.650128011979693, 0.6871356916337524],
+    "structure_dice": {
+      "SSC": 0.6553444189609177,
+      "HSC": 0.7115357451851381,
+      "PSC": 0.6394660481536287
+    },
+    "macro_surface_dice_1mm": 0.9753322942606435,
+    "macro_assd_mm": 0.20716220931479218,
+    "macro_hd95_mm": 0.7974031119912773
+  },
+  "internal_patient_level_test": {
+    "macro_dice": 0.8135817310370149,
+    "macro_dice_ci95": [0.8052608416507356, 0.8214106127746712]
+  },
+  "historical_external_versions": {
+    "formal_frozen": 0.6687820707665615,
+    "archived_v2": 0.6404254759034419,
+    "legacy_v1": 0.4013460262908028,
+    "all_t2": "not_applicable_no_SSC_HSC_PSC_predictions"
+  },
+  "mapping_audit": {
+    "identity_structure_mapping_optimal_ears": 100,
+    "total_ears": 100,
+    "left_right_swap_improved_patients": 0,
+    "total_patients": 50
+  },
+  "diagnostic_only_integer_shift": {
+    "radius_voxels": 2,
+    "best_shift_mean_dice": 0.7167739588804909,
+    "reportable_as_independent_validation": false
+  },
+  "target_external_macro_dice": 0.78,
+  "selection_boundary": "No external-label model, threshold, morphology, registration, or checkpoint selection. A new untouched external test cohort is required for a new independent validation claim."
+}

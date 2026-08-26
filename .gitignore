@@ -13,6 +13,7 @@ __pycache__/
 tmp/
 *.log
 *.pid
+project_audit/private/
 
 # Private local configuration (commit only the example)
 config/project_config.yaml

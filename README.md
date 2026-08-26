@@ -1,6 +1,6 @@
 # Ménière disease progression with P-EBM
 
-This private, code-only repository is being rebuilt as a reproducible study of
+This code-only repository is being rebuilt as a reproducible study of
 multimodal Ménière disease progression using the Parsimonious Event-Based Model
 (P-EBM). Cross-sectional P-EBM results are pseudo-temporal orderings; they are not
 longitudinal transition rates, causal sequences, or a natural-history model.
@@ -20,6 +20,8 @@ before cohort, index-ear, variable-role, and event-state adjudication.
 - [Workspace cleanup log](docs/CLEANUP_LOG.md)
 - [Clinical feature data dictionary](docs/DATA_DICTIONARY.md)
 - [Protected-data policy](data/README.md)
+- [External semicircular-canal Dice re-audit](docs/EXTERNAL_DICE_REAUDIT_20260826.md)
+- [ChatGPT review guide](docs/CHATGPT_REVIEW_GUIDE.md)
 
 The hearing-rule audit is exploratory: it does not freeze the affected-ear
 definition and does not run P-EBM.
