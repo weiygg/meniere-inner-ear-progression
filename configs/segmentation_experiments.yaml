@@ -6,7 +6,7 @@ external_reference_loading_during_selection: forbidden
 
 compute_profiles:
   equal_budget_pilot:
-    epochs_per_model: 10
+    epochs_per_model: 5
     purpose: implementation_and_internal_screening_only
     final_model_claim_allowed: false
     reason: observed_default_runtime_about_one_hour_per_epoch_on_6GB_GTX1660Ti

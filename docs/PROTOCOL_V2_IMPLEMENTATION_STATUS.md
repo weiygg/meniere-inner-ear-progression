@@ -13,7 +13,7 @@ Date: 2026-08-26
 | Legacy `sub128` HSC filename | corrected/audited | `138R_HSC.nii.gz` renamed to `128R_HSC.nii.gz` after SHA-256 identity check against canonical copy |
 | M1 source-label overlap | audited/resolved | 2,565 shared voxels in 195/400 ears; explicit nearest-exclusive-core conversion frozen in D021 |
 | M1 dataset and planner | completed | 280 train, 60 validation, 60 isolated benchmark ears; nnU-Net 2.6.2 `3d_fullres`; planner hashes recorded |
-| M1 training | equal-budget pilot running | fresh 10-epoch run started after preserving the interrupted 1,000-epoch checkpoint; locked validation only; no external labels |
+| M1 training | equal-budget pilot running | fresh 5-epoch run requested by study team; earlier 10-epoch attempt retained as incomplete local audit; locked validation only; no external labels |
 | M2-M3 | executable, not yet trained | fixed bias-field augmentation and fixed 0.1 soft-clDice trainers implemented |
 | Current external 50 | locked | aggregate result documented; forbidden as a selection source |
 | Blinded inter-reader sampling | script implemented | patient UID output remains local and ignored |
