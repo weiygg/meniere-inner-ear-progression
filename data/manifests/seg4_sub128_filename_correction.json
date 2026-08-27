@@ -1,0 +1,13 @@
+{
+  "status": "complete",
+  "date": "2026-08-27",
+  "dataset_namespace": "LS_SEG_200",
+  "subject_uid": "LS_SEG_0128",
+  "old_basename": "138R_HSC.nii.gz",
+  "new_basename": "128R_HSC.nii.gz",
+  "operation": "rename_within_same_legacy_subject_directory",
+  "sha256_before_and_after": "959714532f2b09ee06c4951c6c86b143f7b94519c465dbf4a804c558450c0672",
+  "bytes": 29425,
+  "matched_existing_canonical_copy": true,
+  "image_or_mask_uploaded": false
+}

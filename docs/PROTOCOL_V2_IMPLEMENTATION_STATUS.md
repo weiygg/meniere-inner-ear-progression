@@ -10,6 +10,7 @@ Date: 2026-08-26
 | Clinical PTA and affected-ear guard | implemented/blocked | 0.5/1/2/3-kHz function; final rule requires signed inputs |
 | Phase runner and run manifest | implemented | `scripts/run_pipeline.py` |
 | M0 split provenance | completed | 200 people/400 ears; 140/30/30 people in train/validation/internal benchmark; manifest hash recorded |
+| Legacy `sub128` HSC filename | corrected/audited | `138R_HSC.nii.gz` renamed to `128R_HSC.nii.gz` after SHA-256 identity check against canonical copy |
 | M1 source-label overlap | audited/resolved | 2,565 shared voxels in 195/400 ears; explicit nearest-exclusive-core conversion frozen in D021 |
 | M1 dataset and planner | completed | 280 train, 60 validation, 60 isolated benchmark ears; nnU-Net 2.6.2 `3d_fullres`; planner hashes recorded |
 | M1 training | equal-budget pilot running | fresh 10-epoch run started after preserving the interrupted 1,000-epoch checkpoint; locked validation only; no external labels |
