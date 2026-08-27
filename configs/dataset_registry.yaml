@@ -1,0 +1,79 @@
+version: 2
+id_policy:
+  require_dataset_namespace: true
+  forbid_bare_numeric_cross_dataset_join: true
+  source_id_mapping: protected_local_only
+
+datasets:
+  LS_SEG_200:
+    uid_prefix: LS_SEG
+    site: Lishui
+    role: segmentation_development
+    people: 200
+    ears: 400
+    imaging_studies: 200
+    training_allowed: true
+    model_selection_allowed: true
+    threshold_selection_allowed: true
+    feature_selection_allowed: true
+    patient_level_split_required: true
+
+  Z2_SEG_EXT1:
+    uid_prefix: Z2_SEG_EXT1
+    site: Zhejiang_Second_Hospital
+    role: frozen_external_validation_stratum_1
+    source_groups: [浙二1-1, 浙二1-2]
+    imaging_studies: 51
+    people: unresolved
+    training_allowed: false
+    model_selection_allowed: false
+    threshold_selection_allowed: false
+    feature_selection_allowed: false
+
+  Z2_SEG_EXT2:
+    uid_prefix: Z2_SEG_EXT2
+    site: Zhejiang_Second_Hospital
+    role: frozen_external_validation_stratum_2
+    source_groups: [浙二2-1, 浙二2-2, 浙二2例新]
+    imaging_studies: 43
+    people: unresolved
+    training_allowed: false
+    model_selection_allowed: false
+    threshold_selection_allowed: false
+    feature_selection_allowed: false
+
+  EXT_MANUAL_50:
+    uid_prefix: Z2_SEG_MANUAL
+    site: Zhejiang_Second_Hospital
+    role: external_manual_reference_locked_benchmark
+    people: 50
+    ears: 100
+    masks: 300
+    structures: [SSC, HSC, PSC]
+    prespecified_subsets: 2
+    people_per_subset: 25
+    training_allowed: false
+    model_selection_allowed: false
+    threshold_selection_allowed: false
+    feature_selection_allowed: false
+    geometry_reliability_allowed: true
+
+  LS_CLIN_79:
+    uid_prefix: LS_CLIN
+    site: Lishui
+    role: independent_clinical_progression_cohort
+    people: 79
+    ear_rows: 158
+    training_allowed: false
+    model_selection_allowed: false
+    must_not_link_to: [LS_SEG_200]
+
+  Z2_CLIN:
+    uid_prefix: Z2_CLIN
+    site: Zhejiang_Second_Hospital
+    role: clinical_progression_cohort_pending_crosswalk
+    baseline_people_audit: 100
+    identified_follow_up_visits: 3
+    final_denominator_status: unresolved_pending_clinical_qc
+    training_allowed: false
+    model_selection_allowed: false

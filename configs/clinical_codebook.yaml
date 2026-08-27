@@ -1,0 +1,27 @@
+version: 1
+status: blocked_pending_signed_clinical_codebook
+pta:
+  canonical_name: PTA_AAOHNS_0.5_1_2_3k
+  frequencies_khz: [0.5, 1, 2, 3]
+  formula: arithmetic_mean
+  unit: dB_HL_unconfirmed
+  allow_4khz_substitution: false
+
+affected_ear:
+  reference_standard: abnormal_clinical_hearing_features
+  status: blocked
+  must_not_use_stage_presence: true
+  must_not_default_to_numerically_worse_ear: true
+  missing_requirements:
+    - exact_hearing_features
+    - abnormal_thresholds
+    - audiometry_to_imaging_time_window
+    - bilateral_abnormal_rule
+    - first_affected_or_index_ear_rule
+    - unresolved_case_rule
+
+variable_role_defaults:
+  primary_event_candidate: [hearing_threshold_0_5khz, hearing_threshold_1khz, hearing_threshold_2khz, hearing_threshold_3khz, PTA_AAOHNS_0.5_1_2_3k]
+  clinical_validator: [AAO_HNS_stage, DHI, THI, VADL, ear_fullness, symptom_burden]
+  endotype_modifier: [SSC_geometry, HSC_geometry, PSC_geometry, VA, ES_ED]
+  covariate: [age, sex]

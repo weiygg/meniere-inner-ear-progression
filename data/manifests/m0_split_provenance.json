@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "dataset_id": "LS_SEG_200",
+  "manifest_sha256": "987d811a7ce4f608132cac3d2d305ec097ffe136857bf4cc7bee117d29fbedcb",
+  "people": 200,
+  "ears": 400,
+  "split_counts": {
+    "test": {
+      "people": 30,
+      "ears": 60
+    },
+    "train": {
+      "people": 140,
+      "ears": 280
+    },
+    "validation": {
+      "people": 30,
+      "ears": 60
+    }
+  },
+  "patient_level_split": true,
+  "both_ears_same_split": true,
+  "interpretation": "historical internal benchmark; repeated prior review means it is not described as untouched",
+  "contains_patient_level_ids": false
+}

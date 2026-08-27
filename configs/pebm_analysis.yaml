@@ -1,0 +1,39 @@
+version: 1
+analysis_name: primary_common_core_pebm
+status: blocked_pending_clinical_gates
+interpretation: pseudo-temporal ordering of biomarker abnormalities
+forbidden_interpretations:
+  - longitudinal_transition_probability
+  - actual_time_to_event
+  - natural_history_transition_rate
+  - causal_sequence
+official_upstream:
+  citation: Parker et al. NeuroImage 2025
+  doi: 10.1016/j.neuroimage.2025.121162
+  pinned_commit: ffbe8a969b2947769098f1f4e6099edb32f36b97
+
+primary_cohorts: [LS_CLIN_79, Z2_CLIN]
+common_core_requirements:
+  available_in_both_centers: true
+  consistent_definition: true
+  consistent_measurement_window: true
+  eligibility_gate_passed: true
+
+blocking_gates:
+  clinical_codebook_signed: false
+  Z2_crosswalk_resolved: false
+  affected_ear_rule_signed: false
+  measurement_windows_signed: false
+
+role_policy:
+  nonmonotonic_symptoms_primary_events: false
+  static_geometry_primary_events: false
+  covariates_primary_events: false
+
+robustness_after_primary_fit:
+  patient_level_bootstrap_minimum: 1000
+  event_order_uncertainty: true
+  stage_posterior_uncertainty: true
+  center_stratified_sensitivity: true
+  validator_gradients: true
+  endotype_stage_associations: true

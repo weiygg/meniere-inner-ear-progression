@@ -1,0 +1,19 @@
+version: 1
+overlaps:
+  LS_SEG_200__LS_CLIN_79:
+    overlap_status: verified
+    patient_overlap: 0
+    verified_date: 2026-08-25
+    interpretation: >-
+      Local numeric IDs restart from 1 in each dataset. Same numeric values are
+      dataset-local collisions and are not patient identity matches.
+  EXT_MANUAL_50__LS_SEG_200:
+    overlap_status: no_exact_T2_hash_overlap_found
+    patient_overlap: unresolved_without_cross_institution_identity_crosswalk
+    interpretation: >-
+      No exact T2 file hash overlap was found. Numeric source identifiers cannot be
+      compared across institutions as patient identities.
+  Z2_CLIN__Z2_SEG_EXT1:
+    overlap_status: unresolved_pending_explicit_crosswalk
+  Z2_CLIN__Z2_SEG_EXT2:
+    overlap_status: unresolved_pending_explicit_crosswalk

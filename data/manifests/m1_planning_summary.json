@@ -1,0 +1,18 @@
+{
+  "status": "complete",
+  "dataset": "Dataset501_LSSemicircularCanals",
+  "nnunet_version": "2.6.2",
+  "configuration": "3d_fullres",
+  "planner": "ExperimentPlanner",
+  "preprocessing_workers": 1,
+  "training_ears": 280,
+  "validation_ears": 60,
+  "internal_benchmark_ears_excluded_from_fingerprint": 60,
+  "spacing_internal_axis_order_mm": [0.5, 0.3472222089767456, 0.3472222089767456],
+  "patch_size_internal_axis_order": [48, 128, 128],
+  "planned_batch_size": 7,
+  "fingerprint_sha256": "94218db00c38f1d4d71458c2f44a203d8f30643332cca4397741fa67bbc5c86a",
+  "plans_sha256": "fb77e2a445f3f90220be92eeea444251f0cf133b0e9162d5e40e5bd50065a066",
+  "locked_split_sha256": "766b578af78257ac74b0095057127da2edc5b97c9739693e5f936d61267dbdef",
+  "external_labels_loaded": false
+}

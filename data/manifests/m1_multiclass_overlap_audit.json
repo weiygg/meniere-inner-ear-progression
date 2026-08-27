@@ -1,0 +1,24 @@
+{
+  "status": "complete",
+  "ears": 400,
+  "people": 200,
+  "any_overlap_ears": 195,
+  "overlap_voxels": 2565,
+  "triple_overlap_voxels": 0,
+  "pair_overlap_voxels": {
+    "SSC_HSC": 14,
+    "SSC_PSC": 2551,
+    "HSC_PSC": 0
+  },
+  "split_ears": {
+    "test": 60,
+    "train": 280,
+    "validation": 60
+  },
+  "interpretation": "multiclass_conversion_requires_explicit_overlap_policy",
+  "structures": [
+    "SSC",
+    "HSC",
+    "PSC"
+  ]
+}

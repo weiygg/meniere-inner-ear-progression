@@ -1,0 +1,109 @@
+version: 1
+selection_dataset: LS_SEG_200
+selection_metric: macro_dice_SSC_HSC_PSC
+selection_order: [architecture, augmentation, topology_loss, threshold_postprocessing]
+external_reference_loading_during_selection: forbidden
+
+compute_profiles:
+  equal_budget_pilot:
+    epochs_per_model: 10
+    purpose: implementation_and_internal_screening_only
+    final_model_claim_allowed: false
+    reason: observed_default_runtime_about_one_hour_per_epoch_on_6GB_GTX1660Ti
+  full_default:
+    epochs_per_model: 1000
+    status: requires_higher_throughput_compute
+
+models:
+  M0:
+    name: frozen_structure_specific_TinyViT_UNet
+    status: frozen_baseline
+    architecture: three_independent_binary_3d_TinyViT_UNet
+    target_spacing_mm: [0.3472222, 0.3472222, 0.5]
+    crop_size_voxels: [128, 128, 48]
+    thresholds: {SSC: 0.15, HSC: 0.20, PSC: 0.10}
+    connected_components: {SSC: top_1, HSC: retain_all, PSC: top_1}
+    internal_benchmark_macro_dice: 0.8135817310370149
+    internal_benchmark_interpretation: previously_viewed_internal_benchmark
+  M1:
+    name: nnUNet_v2_multiclass
+    status: equal_budget_pilot_running
+    trainer: nnUNetTrainer
+    configuration: 3d_fullres
+    labels: {background: 0, SSC: 1, HSC: 2, PSC: 3}
+    folds: patient_level_locked_split
+    input_unit: one_ear_predicted_center_crop
+    training_validation_ears: 340
+    internal_benchmark_ears_excluded_from_fingerprint: 60
+    binary_to_multiclass_overlap_policy: nearest_exclusive_core_in_physical_space
+    overlap_tie_break_order: [SSC, HSC, PSC]
+    left_right_policy: unmirrored_side_invariant_labels
+    nnunet_version: 2.6.2
+    planner: ExperimentPlanner
+    planned_patch_size: [48, 128, 128]
+    planned_batch_size: 7
+  M2:
+    name: nnUNet_v2_scanner_robust
+    status: planned
+    inherits: M1
+    augmentation:
+      nnunet_default_gamma_contrast: fixed
+      nnunet_default_gaussian_noise: fixed
+      nnunet_default_gaussian_blur: fixed
+      nnunet_default_resolution_simulation: fixed
+      nnunet_default_spatial_transform: fixed
+      additional_bias_field:
+        coefficient_range: [-0.15, 0.15]
+        probability: 0.20
+  M3:
+    name: nnUNet_v2_scanner_robust_soft_cldice
+    status: planned
+    inherits: M2
+    loss: DiceCE_plus_soft_clDice
+    soft_cldice_weight_candidates: [0.1]
+    soft_skeleton_iterations: 3
+
+reported_metrics:
+  - macro_dice
+  - SSC_dice
+  - HSC_dice
+  - PSC_dice
+  - precision
+  - recall
+  - volume_bias
+  - surface_dice_1mm
+  - ASSD_mm
+  - HD95_mm
+  - clDice
+  - centerline_recall
+
+locked_external_50:
+  status: previously_exposed_locked_benchmark
+  macro_dice: 0.6687820707665615
+  structure_dice: {SSC: 0.6553444189609177, HSC: 0.7115357451851381, PSC: 0.6394660481536287}
+  surface_dice_1mm: 0.9753322942606435
+  ASSD_mm: 0.20716220931479218
+  HD95_mm: 0.7974031119912773
+  may_select_model: false
+
+reliability_gate:
+  status: protocol_blocker_threshold_not_signed
+  report_continuous_estimates_and_ci: true
+  icc_model: two_way_mixed_absolute_agreement_single_measure
+  pass_threshold: null
+  geometry_protocol:
+    coordinate_system: NIfTI_physical_RAS_plus_from_prediction_grid
+    reference_resampling: nearest_neighbor_to_prediction_grid
+    skeletonization: skimage_3d_thinning
+    centerline_length: 26_neighbor_physical_edge_sum
+    plane_normal: least_variance_PCA_axis
+    inter_canal_angle: unsigned_normal_angle_0_to_90_degrees
+    left_right_reflection: not_required_for_unsigned_plane_angle
+
+new_confirmatory_external:
+  status: not_found
+  recommended_minimum_people: 30
+  primary_endpoint: macro_dice
+  acceptance_point_estimate: 0.78
+  report_ci95: true
+  no_parameter_callback_after_test: true

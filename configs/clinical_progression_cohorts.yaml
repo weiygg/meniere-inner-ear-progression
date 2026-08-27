@@ -1,0 +1,26 @@
+version: 1
+cohorts:
+  LS_CLIN_79:
+    people: 79
+    ear_rows: 158
+    subject_namespace: LS_CLIN
+    segmentation_identity_relation: verified_distinct_from_LS_SEG_200
+  Z2_CLIN:
+    baseline_people_audit: 100
+    identified_follow_up_visits: 3
+    subject_namespace: Z2_CLIN
+    canonical_crosswalk_status: blocked
+
+required_master_keys:
+  - dataset_id
+  - subject_uid
+  - visit_uid
+  - ear_uid
+  - exam_uid
+  - mask_uid
+  - model_version
+  - feature_version
+
+crosswalk_policy:
+  explicit_hospital_crosswalk_required: true
+  prohibited_automatic_join_fields: [name, row_number, approximate_date]

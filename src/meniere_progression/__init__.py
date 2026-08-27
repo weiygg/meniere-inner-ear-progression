@@ -1,6 +1,3 @@
-"""Reproducible Ménière progression study package.
+"""Reproducible, PHI-safe Ménière progression research package."""
 
-Clinical modelling modules are intentionally not exposed at audit checkpoint 01.
-"""
-
-__version__ = "0.1.0-audit"
+__version__ = "0.2.0-protocol-v2"

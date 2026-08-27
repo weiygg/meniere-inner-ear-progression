@@ -1,0 +1,33 @@
+version: 1
+development:
+  dataset_id: LS_SEG_200
+  split_unit: patient
+  both_ears_same_split: true
+  expected_people: 200
+  expected_ears: 400
+  selection_scope: internal_only
+
+locked_external_benchmark:
+  dataset_id: EXT_MANUAL_50
+  people: 50
+  ears: 100
+  masks: 300
+  status: previously_exposed_locked_redevelopment_benchmark
+  allowed_uses: [fixed_model_evaluation, geometry_reliability, blinded_reader_agreement]
+  prohibited_uses:
+    - architecture_selection
+    - augmentation_selection
+    - loss_selection
+    - threshold_selection
+    - morphology_selection
+    - checkpoint_selection
+
+external_imaging_strata:
+  - dataset_id: Z2_SEG_EXT1
+    imaging_studies: 51
+  - dataset_id: Z2_SEG_EXT2
+    imaging_studies: 43
+
+institution_interpretation: >-
+  Z2_SEG_EXT1 and Z2_SEG_EXT2 are two predefined validation strata from the same
+  external institution, not two independent hospitals.
