@@ -1,0 +1,42 @@
+{
+  "people": 30,
+  "ears": 60,
+  "bootstrap_unit": "patient",
+  "bootstrap_repetitions": 5000,
+  "seed": 20260828,
+  "estimates": {
+    "SSC": {
+      "dice": 0.7848567731166541,
+      "ci95_low": 0.7731191011036543,
+      "ci95_high": 0.7956325497252803
+    },
+    "HSC": {
+      "dice": 0.8167202929213481,
+      "ci95_low": 0.8036581866353717,
+      "ci95_high": 0.8292377339496929
+    },
+    "PSC": {
+      "dice": 0.7937483513085041,
+      "ci95_low": 0.7853995361815433,
+      "ci95_high": 0.8017394146847022
+    },
+    "macro": {
+      "dice": 0.7984418057821688,
+      "ci95_low": 0.790870400068526,
+      "ci95_high": 0.8058272908874646
+    }
+  },
+  "status": "complete",
+  "experiment": "M2",
+  "run_mode": "equal_budget_internal_pilot",
+  "epochs": 5,
+  "configuration": "3d_fullres",
+  "trainer": "nnUNetTrainerProtocolV2M2",
+  "external_labels_loaded": false,
+  "interpretation": "internal_validation_pilot_not_external_performance",
+  "summary_sha256": "afec2558a7240a26eb5abc68e42a28b26321964acf2d6ca7d8ce55a360956f11",
+  "training_manifest_sha256": "b051627a30951b31f84e2cadd6b0d688805970d23e76e739dbc6580e7ba7912b",
+  "checkpoint_final_sha256": "0c3688004effdd3719da75819fd4f47595daf0bdcccbd87e0eed30036c4bf452",
+  "checkpoint_best_sha256": "88793a04609295c4177b574cae9d7f23b72cbe7971f68439814ba89ee7a1191e",
+  "weights_uploaded": false
+}

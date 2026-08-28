@@ -1,6 +1,6 @@
 # Protocol V2 implementation status
 
-Date: 2026-08-26
+Date: 2026-08-29
 
 | Area | Status | Evidence / next gate |
 |---|---|---|
@@ -14,9 +14,9 @@ Date: 2026-08-26
 | M1 source-label overlap | audited/resolved | 2,565 shared voxels in 195/400 ears; explicit nearest-exclusive-core conversion frozen in D021 |
 | M1 dataset and planner | completed | 280 train, 60 validation, 60 isolated benchmark ears; nnU-Net 2.6.2 `3d_fullres`; planner hashes recorded |
 | M1 training | equal-budget pilot completed | 5 epochs; 30 people/60 ears; macro Dice 0.7964 (patient-bootstrap 95% CI 0.7882-0.8046); internal validation only |
-| M2 training | equal-budget pilot running | same split and 5-epoch budget; fixed bounded bias-field augmentation; no external labels |
-| M3 | executable, not yet trained | fixed M2 augmentation plus 0.1 soft-clDice trainer implemented |
-| Current external 50 | locked | aggregate result documented; forbidden as a selection source |
+| M2 training | equal-budget pilot completed/selected | 5 epochs; internal macro Dice 0.7984 (95% CI 0.7909-0.8058); selected among M1-M3 using internal validation only |
+| M3 training | equal-budget pilot completed/not selected | 5 epochs; internal macro Dice 0.7957 (95% CI 0.7873-0.8038); fixed M2 augmentation plus 0.1 soft-clDice |
+| Current external 50 | locked exposed evaluation completed | selected M2 pooled macro Dice 0.6696 (95% CI 0.6527-0.6867); Center 2 0.6554 and Center 3 0.6837; target 0.78 not reached; forbidden as a selection source |
 | Blinded inter-reader sampling | script implemented | patient UID output remains local and ignored |
 | Geometry reliability | continuous estimates completed | 50 people/100 ears/300 mask pairs; patient bootstrap 1,000; formal pass threshold remains blocked |
 | P-EBM eligibility | schema-only validator implemented | final fit remains blocked |

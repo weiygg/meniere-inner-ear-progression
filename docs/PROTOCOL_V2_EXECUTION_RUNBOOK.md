@@ -166,7 +166,52 @@ python scripts\summarize_nnunet_validation.py `
 Compare M1/M2/M3 only on the locked internal validation split. A five-epoch pilot
 is an implementation and screening result, not a final model-performance claim.
 
-## 8. Geometry reliability
+## 8. Frozen exposed-external evaluation
+
+Run this section only after selecting M1/M2/M3 from internal validation. The
+external study-QC tables contain the frozen union-localizer centers recorded before
+nnU-Net selection. Manual-mask directory names define the two prespecified 25-person
+evaluation subsets but masks are not loaded during crop preparation or inference.
+
+```powershell
+$ExternalStudyQc = '<LOCAL_FROZEN_EXTERNAL_STUDY_QC.csv>'
+$ExternalOverrideQc = '<LOCAL_CENTER3_OVERRIDE_STUDY_QC.csv>'
+$ManualCenter2 = '<LOCAL_CENTER2_MANUAL_REFERENCE_DIR>'
+$ManualCenter3 = '<LOCAL_CENTER3_MANUAL_REFERENCE_DIR>'
+$SelectedModelFolder = '<LOCAL_SELECTED_NNUNET_MODEL_FOLDER>'
+$ExternalRun = Join-Path $RunRoot 'selected_model_exposed_external'
+
+python scripts\prepare_nnunet_external_crops.py `
+  --center2-study-qc $ExternalStudyQc --center3-study-qc $ExternalStudyQc `
+  --manual-center2-dir $ManualCenter2 --manual-center3-dir $ManualCenter3 `
+  --override-center3-study-qc $ExternalOverrideQc `
+  --output-dir "$ExternalRun\prepared"
+
+python scripts\predict_nnunet_protocol_v2.py `
+  --input-dir "$ExternalRun\prepared\imagesTs" `
+  --output-dir "$ExternalRun\predicted_crops" `
+  --model-folder $SelectedModelFolder --fold 0 `
+  --checkpoint checkpoint_final.pth --device cuda
+
+python scripts\restore_nnunet_external_predictions.py `
+  --prediction-dir "$ExternalRun\predicted_crops" `
+  --metadata "$ExternalRun\prepared\external_crop_metadata.json" `
+  --output-dir "$ExternalRun\restored"
+
+python scripts\evaluate_nnunet_external_manual_masks.py `
+  --manual-center2-dir $ManualCenter2 --manual-center3-dir $ManualCenter3 `
+  --manifest-center2 "$ExternalRun\restored\c2_prediction_manifest.csv" `
+  --manifest-center3 "$ExternalRun\restored\c3_prediction_manifest.csv" `
+  --checkpoint "$SelectedModelFolder\fold_0\checkpoint_final.pth" `
+  --output-dir "$ExternalRun\evaluation" --bootstrap 5000 --seed 20260829
+```
+
+The preparation metadata must report `external_labels_loaded: false`. Patient-level
+predictions and metrics remain local; only reviewed aggregate summaries may enter
+Git. Center 2 and Center 3 are strata from one external institution and have already
+been exposed, so they cannot support a new independent confirmatory claim.
+
+## 9. Geometry reliability
 
 After blinded manual masks are available, compute physical-space geometry
 reliability locally. The input and generated patient-level CSV/figures remain
@@ -184,7 +229,7 @@ Report ICC(A,1), 95% patient-bootstrap confidence intervals, Bland-Altman limits
 MAE, and relative error. Do not invent a pass threshold: the current protocol
 records that threshold as unsigned and therefore blocked.
 
-## 9. Clinical P-EBM gate
+## 10. Clinical P-EBM gate
 
 The following commands audit readiness without fitting a final clinical model.
 
@@ -205,7 +250,7 @@ The `pebm_eligibility` phase currently returns exit code 2 and records its block
 that is the expected safe stop until the codebook is signed. Do not infer missing
 crosswalks, endpoints, units, ear assignments, or visit timing from numeric filenames.
 
-## 10. Code snapshot and verification
+## 11. Code snapshot and verification
 
 Commit the reviewed code first. Then create a text-only code snapshot. The builder
 uses `git ls-files`, refuses dirty tracked files, applies a strict allowlist, rejects

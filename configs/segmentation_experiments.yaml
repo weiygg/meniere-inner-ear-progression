@@ -44,7 +44,7 @@ models:
     planned_batch_size: 7
   M2:
     name: nnUNet_v2_scanner_robust
-    status: equal_budget_pilot_running
+    status: equal_budget_pilot_complete_selected_by_internal_validation
     inherits: M1
     augmentation:
       nnunet_default_gamma_contrast: fixed
@@ -55,13 +55,16 @@ models:
       additional_bias_field:
         coefficient_range: [-0.15, 0.15]
         probability: 0.20
+    internal_validation_macro_dice: 0.7984418057821688
+    exposed_external_macro_dice: 0.66957135051441
   M3:
     name: nnUNet_v2_scanner_robust_soft_cldice
-    status: planned
+    status: equal_budget_pilot_complete_not_selected
     inherits: M2
     loss: DiceCE_plus_soft_clDice
     soft_cldice_weight_candidates: [0.1]
     soft_skeleton_iterations: 3
+    internal_validation_macro_dice: 0.7956834764110065
 
 reported_metrics:
   - macro_dice

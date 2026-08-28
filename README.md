@@ -29,6 +29,7 @@ blocked.
 - [M0 external geometry reliability](reports/M0_GEOMETRY_RELIABILITY.md)
 - [M1 five-epoch internal validation pilot](reports/M1_PILOT5_INTERNAL_VALIDATION.md)
 - [Complete Protocol V2 execution and code-archive runbook](docs/PROTOCOL_V2_EXECUTION_RUNBOOK.md)
+- [Final M1/M2/M3 pilot and exposed-external segmentation results](reports/SEGMENTATION_PILOT5_FINAL_RESULTS.md)
 
 The hearing-rule audit is exploratory: it does not freeze the affected-ear
 definition and does not run P-EBM.
