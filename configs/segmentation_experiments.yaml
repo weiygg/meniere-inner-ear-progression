@@ -27,7 +27,7 @@ models:
     internal_benchmark_interpretation: previously_viewed_internal_benchmark
   M1:
     name: nnUNet_v2_multiclass
-    status: equal_budget_pilot_running
+    status: equal_budget_pilot_complete
     trainer: nnUNetTrainer
     configuration: 3d_fullres
     labels: {background: 0, SSC: 1, HSC: 2, PSC: 3}
@@ -44,7 +44,7 @@ models:
     planned_batch_size: 7
   M2:
     name: nnUNet_v2_scanner_robust
-    status: planned
+    status: equal_budget_pilot_running
     inherits: M1
     augmentation:
       nnunet_default_gamma_contrast: fixed

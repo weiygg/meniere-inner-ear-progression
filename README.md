@@ -27,6 +27,7 @@ blocked.
 - [Protocol V2 data and experiment plan](docs/PROTOCOL_V2_DATA_AND_EXPERIMENT_PLAN.md)
 - [Protocol V2 implementation status](docs/PROTOCOL_V2_IMPLEMENTATION_STATUS.md)
 - [M0 external geometry reliability](reports/M0_GEOMETRY_RELIABILITY.md)
+- [M1 five-epoch internal validation pilot](reports/M1_PILOT5_INTERNAL_VALIDATION.md)
 
 The hearing-rule audit is exploratory: it does not freeze the affected-ear
 definition and does not run P-EBM.
