@@ -18,7 +18,7 @@ Date: 2026-08-29
 | M3 training | equal-budget pilot completed/not selected | 5 epochs; internal macro Dice 0.7957 (95% CI 0.7873-0.8038); fixed M2 augmentation plus 0.1 soft-clDice |
 | Current external 50 | locked exposed evaluation completed | selected M2 pooled macro Dice 0.6696 (95% CI 0.6527-0.6867); Center 2 0.6554 and Center 3 0.6837; target 0.78 not reached; forbidden as a selection source |
 | Blinded inter-reader sampling | script implemented | patient UID output remains local and ignored |
-| Geometry reliability | continuous estimates completed | 50 people/100 ears/300 mask pairs; patient bootstrap 1,000; formal pass threshold remains blocked |
-| P-EBM eligibility | schema-only validator implemented | final fit remains blocked |
+| Geometry reliability | continuous estimates completed | 50 people/100 ears/300 mask pairs; patient-clustered bootstrap 5,000; formal pass threshold remains blocked |
+| P-EBM eligibility | schema-only audit completed | 73 variable rows audited; 0 eligible primary events and 73 blocked rows; final fit remains blocked |
 | Final clinical P-EBM | not run | crosswalk, codebook, timing, and affected-ear gates unresolved |
 | New confirmatory external cohort | not found | prospective requirement documented |

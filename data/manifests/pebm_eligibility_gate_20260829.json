@@ -1,0 +1,14 @@
+{
+  "analysis_date": "2026-08-29",
+  "status": "schema_audit_complete_final_fit_blocked",
+  "variable_rows": 73,
+  "eligible_primary_events": 0,
+  "blocked_rows": 73,
+  "clinical_qc_phase": "ready",
+  "pebm_eligibility_phase": "blocked",
+  "phase_blockers": [
+    "clinical_codebook_not_signed"
+  ],
+  "final_pebm_fit_run": false,
+  "contains_patient_level_data": false
+}
