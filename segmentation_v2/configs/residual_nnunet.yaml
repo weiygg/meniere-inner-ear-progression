@@ -1,0 +1,33 @@
+version: 1
+experiment_id: E2
+status: gpu_probe_passed_training_not_run
+dataset_id: 502
+dataset_name: LSSemicircularCanalsV2
+dataset_namespace: LS_SEG_200
+configuration: 3d_fullres
+plans: nnUNetResEncUNetMPlans
+planner: nnUNetPlannerResEncM
+architecture: ResidualEncoderUNet
+labels: {background: 0, SSC: 1, HSC: 2, PSC: 3}
+input_unit: one_ear_frozen_localizer_crop
+people: 200
+ears: 400
+cross_validation:
+  folds: 5
+  split_unit: patient
+  seed: 20260830
+model_selection:
+  primary_metric: oof_macro_dice
+  target: 0.83
+  external_labels_allowed: false
+training:
+  planned_batch_size: 6
+  runtime_batch_size_on_6gb_gpu: 1
+  checkpoint_source: internal_validation_only
+  save_probabilities: true
+compute:
+  gpu: NVIDIA_GeForce_GTX_1660_Ti_6GB
+  full_five_fold_training_status: not_run
+  probe_batch_size: 1
+  probe_peak_allocated_gib: 1.5454
+  trainable_parameters: 101614100

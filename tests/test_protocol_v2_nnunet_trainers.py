@@ -14,9 +14,17 @@ pytestmark = pytest.mark.skipif(
 def test_protocol_trainers_import_and_prespecification() -> None:
     from meniere_progression.segmentation.nnunet_trainers import (
         BoundedBiasFieldTransform,
+        DiceCEBoundarySoftClDice,
+        DiceCEPlusBoundaryLoss,
+        nnUNetTrainerProtocolV2E5,
+        nnUNetTrainerProtocolV2E6,
         nnUNetTrainerProtocolV2M2,
         nnUNetTrainerProtocolV2M3,
     )
 
     assert BoundedBiasFieldTransform().coefficient_range == (-0.15, 0.15)
     assert issubclass(nnUNetTrainerProtocolV2M3, nnUNetTrainerProtocolV2M2)
+    assert issubclass(nnUNetTrainerProtocolV2E5, nnUNetTrainerProtocolV2M2)
+    assert issubclass(nnUNetTrainerProtocolV2E6, nnUNetTrainerProtocolV2M2)
+    assert DiceCEPlusBoundaryLoss.__name__ == "DiceCEPlusBoundaryLoss"
+    assert DiceCEBoundarySoftClDice.__name__ == "DiceCEBoundarySoftClDice"

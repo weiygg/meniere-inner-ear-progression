@@ -1,0 +1,21 @@
+version: 1
+selection_dataset: LS_SEG_200
+selection_metric: patient_level_five_fold_oof_macro_dice
+external_labels_allowed: false
+seed: 20260830
+experiments:
+  E0: {model: V1_TinyViT, resolution: legacy, augmentation: legacy, loss: legacy, multiclass: false, status: completed_historical}
+  E1: {model: nnUNet_v2, resolution: fullres, augmentation: default, loss: DiceCE, multiclass: true, status: smoke_passed}
+  E2: {model: ResidualEncoderUNet, resolution: fullres, augmentation: default, loss: DiceCE, multiclass: true, status: planned}
+  E3: {model: best_CNN, resolution: high_resolution, augmentation: current, loss: DiceCE, multiclass: true, status: not_run}
+  E4: {model: E3, resolution: high_resolution, augmentation: MRI_robust, loss: DiceCE, multiclass: true, status: not_run}
+  E5: {model: E4, resolution: high_resolution, augmentation: MRI_robust, loss: 0.70_DiceCE_0.30_boundary, multiclass: true, status: not_run}
+  E6: {model: E4, resolution: high_resolution, augmentation: MRI_robust, loss: 0.55_DiceCE_0.25_boundary_0.20_soft_clDice, multiclass: true, status: not_run}
+  E7: {model: internal_winner, resolution: internal_winner, augmentation: internal_winner, loss: internal_winner, multiclass: true, ensemble: five_fold_probability_average, status: blocked_by_training}
+  E8: {model: E7, ensemble: five_fold_probability_average_plus_prespecified_TTA, status: blocked_by_internal_selection}
+loss_ablation:
+  A: {loss: DiceCE, hypothesis: reference}
+  B: {loss: Dice_plus_Tversky, fp_weight: 0.5, fn_weight: 0.5, hypothesis: symmetric_overlap_error}
+  C: {loss: legacy_Dice_Tversky_focal, fp_weight: 0.65, fn_weight: 0.35, hypothesis: legacy_reference}
+  D: {loss: Dice_plus_Tversky, fp_weight: 0.4, fn_weight: 0.6, hypothesis: preserve_recall_if_internal_OOF_confirms_undersegmentation}
+paired_ablation_required: true

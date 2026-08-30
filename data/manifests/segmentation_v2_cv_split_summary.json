@@ -1,0 +1,51 @@
+{
+  "status": "pass",
+  "dataset_id": "LS_SEG_200",
+  "seed": 20260830,
+  "folds": 5,
+  "people": 200,
+  "ears": 400,
+  "both_ears_same_fold": true,
+  "patient_overlap_between_validation_folds": 0,
+  "fold_counts": [
+    {
+      "fold": 0,
+      "validation_people": 40,
+      "validation_ears": 80,
+      "training_people": 160,
+      "training_ears": 320
+    },
+    {
+      "fold": 1,
+      "validation_people": 40,
+      "validation_ears": 80,
+      "training_people": 160,
+      "training_ears": 320
+    },
+    {
+      "fold": 2,
+      "validation_people": 40,
+      "validation_ears": 80,
+      "training_people": 160,
+      "training_ears": 320
+    },
+    {
+      "fold": 3,
+      "validation_people": 40,
+      "validation_ears": 80,
+      "training_people": 160,
+      "training_ears": 320
+    },
+    {
+      "fold": 4,
+      "validation_people": 40,
+      "validation_ears": 80,
+      "training_people": 160,
+      "training_ears": 320
+    }
+  ],
+  "cv_split_sha256": "fa34eb7cd852d0402561689a72367b5d6a9d6c8a9d706f7086beecb1a6fb939e",
+  "nnunet_splits_sha256": "0200faaa677123fde897e62e73b9d8753ca10f75d29ee4234f1f92dfa672fd7d",
+  "contains_patient_level_ids": false,
+  "patient_level_files_uploaded": false
+}

@@ -1,0 +1,275 @@
+{
+  "status": "complete",
+  "audit_date": "2026-08-30",
+  "git_commit": "80c2c31e0c80cd3f6676f2a4c7b8ceb90965ca5a",
+  "v1": {
+    "architecture": "three independent binary 3D TinyViT-UNet models",
+    "trainable_parameters_per_model": 1722977,
+    "crop_size_xyz": [
+      128,
+      128,
+      48
+    ],
+    "target_spacing_xyz_mm": [
+      0.3472222,
+      0.3472222,
+      0.5
+    ],
+    "bottleneck_xyz": [
+      16,
+      16,
+      6
+    ],
+    "downsampling_ratio_xyz": [
+      8,
+      8,
+      8
+    ],
+    "loss": "0.70 Dice + 0.20 Tversky(FP=0.65,FN=0.35) + 0.10 focal",
+    "augmentation": "translation up to 4 voxels; intensity scale/shift +/-10%; Gaussian noise SD 0.03",
+    "split": "patient-level 140/30/30 people; historical internal test previously viewed"
+  },
+  "internal_macro_dice": 0.8135817310370149,
+  "internal_structure_metrics": {
+    "SSC": {
+      "cohort": "V1 internal test",
+      "structure": "SSC",
+      "ear_rows": 60,
+      "dice": 0.7942692740038844,
+      "iou": 0.6619831615491908,
+      "precision": 0.7858766969909848,
+      "recall": 0.8189026307051347,
+      "surface_dice_0p5mm": null,
+      "surface_dice_1p0mm": null,
+      "assd_mm": 0.11568123700827916,
+      "hd95_mm": 0.578056344857459,
+      "volume_ratio_mean": 1.0656587365219172,
+      "volume_ratio_sd": 0.21953508561869484,
+      "volume_ratio_median": 1.037313902120769,
+      "volume_ratio_q1": 0.9760831586303284,
+      "volume_ratio_q3": 1.1287057651745958
+    },
+    "HSC": {
+      "cohort": "V1 internal test",
+      "structure": "HSC",
+      "ear_rows": 60,
+      "dice": 0.8369704735442293,
+      "iou": 0.7211937242102106,
+      "precision": 0.8536414279867164,
+      "recall": 0.8283104504852258,
+      "surface_dice_0p5mm": null,
+      "surface_dice_1p0mm": null,
+      "assd_mm": 0.07320856471852157,
+      "hd95_mm": 0.39842845680352734,
+      "volume_ratio_mean": 0.9787306422758353,
+      "volume_ratio_sd": 0.13411932922179146,
+      "volume_ratio_median": 0.9694146716084009,
+      "volume_ratio_q1": 0.8900692558806481,
+      "volume_ratio_q3": 1.0625503956995668
+    },
+    "PSC": {
+      "cohort": "V1 internal test",
+      "structure": "PSC",
+      "ear_rows": 60,
+      "dice": 0.8095054455629317,
+      "iou": 0.682412121660822,
+      "precision": 0.8270483266661609,
+      "recall": 0.8040338081066446,
+      "surface_dice_0p5mm": null,
+      "surface_dice_1p0mm": null,
+      "assd_mm": 0.08817598934850127,
+      "hd95_mm": 0.5006674315119976,
+      "volume_ratio_mean": 0.9833659645790751,
+      "volume_ratio_sd": 0.16630918560452101,
+      "volume_ratio_median": 0.9963890506697729,
+      "volume_ratio_q1": 0.8777006004960621,
+      "volume_ratio_q3": 1.0852661390706546
+    }
+  },
+  "external_structure_metrics": {
+    "SSC": {
+      "cohort": "V1 exposed external",
+      "structure": "SSC",
+      "ear_rows": 100,
+      "dice": 0.6553444189609177,
+      "iou": 0.4950675920058822,
+      "precision": 0.6162070516927929,
+      "recall": 0.7106696262796954,
+      "surface_dice_0p5mm": 0.9210068292643606,
+      "surface_dice_1p0mm": 0.9577341302448005,
+      "assd_mm": 0.26817101423671263,
+      "hd95_mm": 1.0992684025315986,
+      "volume_ratio_mean": 1.1652284116691407,
+      "volume_ratio_sd": 0.19752657698944495,
+      "volume_ratio_median": 1.1619993279032181,
+      "volume_ratio_q1": 1.0565178613340844,
+      "volume_ratio_q3": 1.2669256381798004
+    },
+    "HSC": {
+      "cohort": "V1 exposed external",
+      "structure": "HSC",
+      "ear_rows": 100,
+      "dice": 0.7115357451851381,
+      "iou": 0.5567142630087292,
+      "precision": 0.7026117068447487,
+      "recall": 0.729802977589338,
+      "surface_dice_0p5mm": 0.9690353883950401,
+      "surface_dice_1p0mm": 0.9957896010474155,
+      "assd_mm": 0.1384659366177814,
+      "hd95_mm": 0.5177985176147999,
+      "volume_ratio_mean": 1.054352629369664,
+      "volume_ratio_sd": 0.1668128140635331,
+      "volume_ratio_median": 1.0304190614539253,
+      "volume_ratio_q1": 0.955112226940472,
+      "volume_ratio_q3": 1.139667449435649
+    },
+    "PSC": {
+      "cohort": "V1 exposed external",
+      "structure": "PSC",
+      "ear_rows": 100,
+      "dice": 0.6394660481536287,
+      "iou": 0.4795381753885524,
+      "precision": 0.5994325757232005,
+      "recall": 0.696563751300048,
+      "surface_dice_0p5mm": 0.9325650207895486,
+      "surface_dice_1p0mm": 0.9724731514897144,
+      "assd_mm": 0.2148496770898824,
+      "hd95_mm": 0.7751424158274333,
+      "volume_ratio_mean": 1.178350137123649,
+      "volume_ratio_sd": 0.20539185505274166,
+      "volume_ratio_median": 1.1872930648769575,
+      "volume_ratio_q1": 1.0608757796257795,
+      "volume_ratio_q3": 1.3108357540547084
+    }
+  },
+  "volume_summary": [
+    {
+      "cohort": "Lishui",
+      "structure": "SSC",
+      "n": 400,
+      "mean": 16.12021157473,
+      "sd": 2.946616368430658,
+      "median": 16.185617141203767,
+      "q1": 14.347027484567958,
+      "q3": 18.205051682098837,
+      "min": 6.751542345679039,
+      "max": 25.07715728395072
+    },
+    {
+      "cohort": "Lishui",
+      "structure": "HSC",
+      "n": 400,
+      "mean": 22.62188657199083,
+      "sd": 4.385949869997445,
+      "median": 22.09321669367293,
+      "q1": 19.410684243827237,
+      "q3": 25.378565424382817,
+      "min": 12.3577337577161,
+      "max": 38.339115462963115
+    },
+    {
+      "cohort": "Lishui",
+      "structure": "PSC",
+      "n": 400,
+      "mean": 18.32124452023541,
+      "sd": 3.481451018271565,
+      "median": 17.81322109953711,
+      "q1": 15.944490628858087,
+      "q3": 20.088852559799463,
+      "min": 10.428721658950659,
+      "max": 32.06982614197543
+    },
+    {
+      "cohort": "External manual reference",
+      "structure": "SSC",
+      "n": 100,
+      "mean": 12.887609934963214,
+      "sd": 2.250470112703373,
+      "median": 12.719424183905879,
+      "q1": 11.4836507442373,
+      "q3": 14.12097210938366,
+      "min": 7.173514113198102,
+      "max": 20.375191346730745
+    },
+    {
+      "cohort": "External manual reference",
+      "structure": "HSC",
+      "n": 100,
+      "mean": 18.573373390062752,
+      "sd": 4.285630013238805,
+      "median": 18.295475070215325,
+      "q1": 15.52252003486144,
+      "q3": 20.405332162332417,
+      "min": 11.935762978262389,
+      "max": 35.20447262275371
+    },
+    {
+      "cohort": "External manual reference",
+      "structure": "PSC",
+      "n": 100,
+      "mean": 15.16083024764137,
+      "sd": 2.986081908614661,
+      "median": 14.648436382412932,
+      "q1": 13.12632519452846,
+      "q3": 17.074772038347582,
+      "min": 9.403934467721882,
+      "max": 24.59490553096492
+    }
+  ],
+  "volume_shift_tests": [
+    {
+      "structure": "SSC",
+      "lishui_patient_n": 200,
+      "external_patient_n": 50,
+      "lishui_patient_median_mm3": 16.245898769290186,
+      "external_patient_median_mm3": 12.704353776105043,
+      "external_to_lishui_median_ratio": 0.7820037510094691,
+      "mann_whitney_u": 8389.0,
+      "p_value": 1.271095139926192e-13,
+      "bh_q_value": 3.8132854197785754e-13
+    },
+    {
+      "structure": "HSC",
+      "lishui_patient_n": 200,
+      "external_patient_n": 50,
+      "lishui_patient_median_mm3": 22.032935065586507,
+      "external_patient_median_mm3": 18.174911807808638,
+      "external_to_lishui_median_ratio": 0.824897443472987,
+      "mann_whitney_u": 7810.0,
+      "p_value": 8.094337325390494e-10,
+      "bh_q_value": 8.094337325390494e-10
+    },
+    {
+      "structure": "PSC",
+      "lishui_patient_n": 200,
+      "external_patient_n": 50,
+      "lishui_patient_median_mm3": 17.888573134645135,
+      "external_patient_median_mm3": 14.57308434340875,
+      "external_to_lishui_median_ratio": 0.8146588458296198,
+      "mann_whitney_u": 7851.0,
+      "p_value": 4.5836197808884013e-10,
+      "bh_q_value": 6.875429671332602e-10
+    }
+  ],
+  "error_interpretation": {
+    "SSC": "predominantly over-segmentation / false positives",
+    "HSC": "mixed boundary-thickness and endpoint mismatch; no single FP/FN direction dominates",
+    "PSC": "predominantly over-segmentation / false positives"
+  },
+  "environment": {
+    "os": "Windows-10-10.0.19045-SP0",
+    "python": "3.12.10",
+    "torch": "2.5.1+cu121",
+    "torch_cuda": "12.1",
+    "cudnn": 90100,
+    "cuda_available": true,
+    "gpu": "NVIDIA GeForce GTX 1660 Ti",
+    "gpu_memory_gib": 6.0,
+    "nnunetv2": "2.6.2",
+    "monai": "1.5.0",
+    "nibabel": "5.3.2",
+    "scikit_image": "0.25.2"
+  },
+  "external_labels_used_for_model_selection": false,
+  "contains_patient_level_data": false
+}

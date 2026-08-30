@@ -1,0 +1,12 @@
+version: 1
+experiment_id: E6
+status: not_run
+dataset_id: 502
+dataset_name: LSSemicircularCanalsV2
+configuration: 3d_fullres
+plans: nnUNetHighResCanalPlans
+trainer: nnUNetTrainerProtocolV2E6
+cross_validation: {folds: 5, split_unit: patient, seed: 20260830}
+model_selection: {primary_metric: oof_macro_dice, external_labels_allowed: false}
+loss: {DiceCE: 0.55, Hausdorff_distance_transform_boundary: 0.25, foreground_soft_clDice: 0.20, skeleton_iterations: 3}
+training: {runtime_batch_size_on_6gb_gpu: 1, save_probabilities: true}

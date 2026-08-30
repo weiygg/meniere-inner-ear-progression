@@ -10,13 +10,15 @@ from pathlib import Path
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run M1/M2/M3 on the locked internal split only.")
-    parser.add_argument("experiment", choices=("M1", "M2", "M3"))
+    parser = argparse.ArgumentParser(description="Run locked-split nnU-Net experiments on LS_SEG_200 only.")
+    parser.add_argument("experiment", choices=("M1", "M2", "M3", "E2", "E4", "E5", "E6"))
     parser.add_argument("--nnunet-raw", type=Path, required=True)
     parser.add_argument("--nnunet-preprocessed", type=Path, required=True)
     parser.add_argument("--nnunet-results", type=Path, required=True)
     parser.add_argument("--dataset", default="Dataset501_LSSemicircularCanals")
     parser.add_argument("--fold", type=int, default=0)
+    parser.add_argument("--plans", default="nnUNetPlans")
+    parser.add_argument("--batch-size", type=int, default=None)
     parser.add_argument("--device", choices=("cuda", "cpu"), default="cuda")
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--continue-training", action="store_true")
@@ -41,6 +43,8 @@ def main() -> None:
     root = Path(__file__).resolve().parents[1]
     sys.path.insert(0, str(root / "src"))
     from meniere_progression.segmentation.nnunet_trainers import (
+        nnUNetTrainerProtocolV2E5,
+        nnUNetTrainerProtocolV2E6,
         nnUNetTrainerProtocolV2M2,
         nnUNetTrainerProtocolV2M3,
     )
@@ -49,11 +53,15 @@ def main() -> None:
         "M1": nnUNetTrainer,
         "M2": nnUNetTrainerProtocolV2M2,
         "M3": nnUNetTrainerProtocolV2M3,
+        "E2": nnUNetTrainer,
+        "E4": nnUNetTrainerProtocolV2M2,
+        "E5": nnUNetTrainerProtocolV2E5,
+        "E6": nnUNetTrainerProtocolV2E6,
     }
     args.run_dir.mkdir(parents=True, exist_ok=True)
     dataset_dir = Path(nnUNet_preprocessed) / args.dataset
     split_file = dataset_dir / "splits_final.json"
-    plans_file = dataset_dir / "nnUNetPlans.json"
+    plans_file = dataset_dir / f"{args.plans}.json"
     if not split_file.exists() or not plans_file.exists():
         raise FileNotFoundError("Planning outputs or locked splits are missing")
 
@@ -68,6 +76,8 @@ def main() -> None:
         "configuration": "3d_fullres",
         "fold": args.fold,
         "trainer": trainer_classes[args.experiment].__name__,
+        "plans": args.plans,
+        "batch_size_override": args.batch_size,
         "model_selection_source": "LS_SEG_200_validation_only",
         "external_labels_loaded": False,
         "run_mode": "equal_budget_internal_pilot" if args.num_epochs is not None else "full_default",
@@ -91,6 +101,10 @@ def main() -> None:
         if args.num_epochs < 1:
             raise ValueError("--num-epochs must be positive")
         trainer.num_epochs = args.num_epochs
+    if args.batch_size is not None:
+        if args.batch_size < 1:
+            raise ValueError("--batch-size must be positive")
+        trainer.batch_size = args.batch_size
     maybe_load_checkpoint(trainer, args.continue_training, False, None)
     trainer.run_training()
     trainer.perform_actual_validation(save_probabilities=True)

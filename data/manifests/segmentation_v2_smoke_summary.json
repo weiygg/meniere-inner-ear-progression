@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "created_date": "2026-08-30",
+  "dataset": "Dataset502_LSSemicircularCanalsV2",
+  "people": 200,
+  "ears": 400,
+  "folds": 5,
+  "both_ears_same_fold": true,
+  "each_ear_is_oof_once": true,
+  "preprocessed_cases": 400,
+  "patch_size_dhw": [48, 128, 128],
+  "device": "cuda",
+  "plain_nnunet_trainable_parameters": 30459924,
+  "output_channels": 4,
+  "trainer_variants_initialized": ["nnUNetTrainer", "nnUNetTrainerProtocolV2M2", "nnUNetTrainerProtocolV2M3"],
+  "external_data_loaded": false,
+  "patient_level_artifacts_uploaded": false
+}

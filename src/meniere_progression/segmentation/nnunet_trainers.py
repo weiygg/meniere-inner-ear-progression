@@ -6,7 +6,7 @@ import torch
 import torch.nn.functional as F
 from batchgeneratorsv2.transforms.base.basic_transform import ImageOnlyTransform
 from batchgeneratorsv2.transforms.utils.random import RandomTransform
-from monai.losses import SoftclDiceLoss
+from monai.losses import HausdorffDTLoss, SoftclDiceLoss
 from nnunetv2.training.loss.deep_supervision import DeepSupervisionWrapper
 from nnunetv2.training.nnUNetTrainer.nnUNetTrainer import nnUNetTrainer
 from torch import nn
@@ -88,3 +88,66 @@ class nnUNetTrainerProtocolV2M3(nnUNetTrainerProtocolV2M2):
                 loss.weight_factors,
             )
         return DiceCEPlusSoftClDice(loss, weight=0.1, iterations=3)
+
+
+class DiceCEPlusBoundaryLoss(nn.Module):
+    """Weighted DiceCE plus a differentiable distance-transform boundary term."""
+
+    def __init__(self, base_loss: nn.Module, base_weight: float = 0.70, boundary_weight: float = 0.30) -> None:
+        super().__init__()
+        self.base_loss = base_loss
+        self.base_weight = base_weight
+        self.boundary_weight = boundary_weight
+        self.boundary = HausdorffDTLoss(
+            alpha=2.0,
+            include_background=False,
+            to_onehot_y=True,
+            softmax=True,
+        )
+
+    def forward(self, net_output: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        return self.base_weight * self.base_loss(net_output, target) + self.boundary_weight * self.boundary(
+            net_output, target
+        )
+
+
+class DiceCEBoundarySoftClDice(nn.Module):
+    """Prespecified topology-aware E6 loss; weights are selected internally only."""
+
+    def __init__(self, base_loss: nn.Module, iterations: int = 3) -> None:
+        super().__init__()
+        self.base_loss = base_loss
+        self.boundary = HausdorffDTLoss(
+            alpha=2.0,
+            include_background=False,
+            to_onehot_y=True,
+            softmax=True,
+        )
+        self.cldice = SoftclDiceLoss(iter_=iterations, smooth=1.0)
+
+    def forward(self, net_output: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        label = target[:, 0].long()
+        one_hot = F.one_hot(label, num_classes=net_output.shape[1]).movedim(-1, 1).to(net_output.dtype)
+        probabilities = torch.softmax(net_output, dim=1)
+        topology = self.cldice(one_hot[:, 1:], probabilities[:, 1:])
+        return 0.55 * self.base_loss(net_output, target) + 0.25 * self.boundary(net_output, target) + 0.20 * topology
+
+
+class nnUNetTrainerProtocolV2E5(nnUNetTrainerProtocolV2M2):
+    """E5: high-resolution plan + MRI-robust augmentation + boundary-aware loss."""
+
+    def _build_loss(self):
+        loss = super()._build_loss()
+        if isinstance(loss, DeepSupervisionWrapper):
+            return DeepSupervisionWrapper(DiceCEPlusBoundaryLoss(loss.loss), loss.weight_factors)
+        return DiceCEPlusBoundaryLoss(loss)
+
+
+class nnUNetTrainerProtocolV2E6(nnUNetTrainerProtocolV2M2):
+    """E6: E5 plus a foreground-only soft-clDice topology term."""
+
+    def _build_loss(self):
+        loss = super()._build_loss()
+        if isinstance(loss, DeepSupervisionWrapper):
+            return DeepSupervisionWrapper(DiceCEBoundarySoftClDice(loss.loss), loss.weight_factors)
+        return DiceCEBoundarySoftClDice(loss)

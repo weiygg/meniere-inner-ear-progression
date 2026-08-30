@@ -31,6 +31,9 @@ blocked.
 - [Complete Protocol V2 execution and code-archive runbook](docs/PROTOCOL_V2_EXECUTION_RUNBOOK.md)
 - [Final M1/M2/M3 pilot and exposed-external segmentation results](reports/SEGMENTATION_PILOT5_FINAL_RESULTS.md)
 - [Protocol V2 execution status through geometry and P-EBM readiness](reports/PROTOCOL_V2_EXECUTION_STATUS_20260829.md)
+- [Independent segmentation V2 workspace](segmentation_v2/README.md)
+- [Segmentation V2 verified baseline audit](segmentation_v2/SEGMENTATION_V2_BASELINE_AUDIT.md)
+- [Segmentation V2 execution report](segmentation_v2/FINAL_REPORT.md)
 
 The hearing-rule audit is exploratory: it does not freeze the affected-ear
 definition and does not run P-EBM.

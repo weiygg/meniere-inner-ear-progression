@@ -1,0 +1,21 @@
+{
+  "status": "complete",
+  "created_date": "2026-08-30",
+  "dataset": "Dataset502_LSSemicircularCanalsV2",
+  "people": 200,
+  "ears": 400,
+  "configuration": "3d_fullres",
+  "preprocessed_cases": 400,
+  "dataset_integrity_passed": true,
+  "preprocessing_workers": 1,
+  "spacing_dhw_mm": [0.5, 0.3472222089767456, 0.3472222089767456],
+  "patch_size_dhw": [48, 128, 128],
+  "planned_batch_size": 7,
+  "network": "PlainConvUNet",
+  "trainable_parameters": 30459924,
+  "fingerprint_sha256": "fc9764fe4ab7e6494cc9393cca5c8f70d8505ae40d53716bc8767a6aa301ee31",
+  "plans_sha256": "534870b11ae0acfe1387f08f427e1257b43e817c38100724d2e74a7266730f98",
+  "locked_split_sha256": "0200faaa677123fde897e62e73b9d8753ca10f75d29ee4234f1f92dfa672fd7d",
+  "external_data_loaded": false,
+  "patient_level_artifacts_uploaded": false
+}

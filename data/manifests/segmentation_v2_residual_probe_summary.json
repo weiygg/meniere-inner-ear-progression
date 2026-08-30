@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "created_date": "2026-08-30",
+  "dataset": "Dataset502_LSSemicircularCanalsV2",
+  "plans": "nnUNetResEncUNetMPlans",
+  "plans_sha256": "48f26a15e7ba703f940b10f3cf87a0a02e78c1692afcf31276039f67d5bf89e8",
+  "architecture": "ResidualEncoderUNet",
+  "planned_batch_size": 6,
+  "probed_batch_size": 1,
+  "patch_size_dhw": [48, 128, 128],
+  "trainable_parameters": 101614100,
+  "mixed_precision_forward_backward_completed": true,
+  "peak_memory_allocated_gib": 1.5453829765,
+  "gpu": "NVIDIA GeForce GTX 1660 Ti",
+  "full_training_status": "not_run",
+  "external_data_loaded": false,
+  "patient_level_artifacts_uploaded": false
+}

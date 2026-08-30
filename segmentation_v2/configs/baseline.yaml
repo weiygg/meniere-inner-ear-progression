@@ -1,0 +1,32 @@
+version: 1
+experiment_id: E0
+status: audited_frozen_legacy_baseline
+dataset: LS_SEG_200
+architecture: three_independent_binary_3d_TinyViT_UNet
+input:
+  crop_size_xyz: [128, 128, 48]
+  target_spacing_xyz_mm: [0.3472222, 0.3472222, 0.5]
+  normalization: nonzero_percentile_0.5_99.5_then_zscore
+  image_interpolation_order: 1
+  mask_interpolation_order: 0
+network:
+  downsampling_ratio_xyz: [8, 8, 8]
+  bottleneck_xyz: [16, 16, 6]
+  transformer_tokens: 1536
+loss:
+  dice_weight: 0.70
+  tversky_weight: 0.20
+  focal_weight: 0.10
+  tversky_fp_weight: 0.65
+  tversky_fn_weight: 0.35
+augmentation:
+  translation_voxels: 4
+  intensity_scale_range: [0.90, 1.10]
+  intensity_shift_range: [-0.10, 0.10]
+  gaussian_noise_sd: 0.03
+postprocessing:
+  SSC: {threshold: 0.15, components: top_1}
+  HSC: {threshold: 0.20, components: retain_all}
+  PSC: {threshold: 0.10, components: top_1}
+selection_source: LS_SEG_200_validation_only
+external_selection_forbidden: true
