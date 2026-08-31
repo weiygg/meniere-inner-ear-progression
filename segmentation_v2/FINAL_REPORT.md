@@ -1,6 +1,6 @@
 # Segmentation V2 final report
 
-Status: **IN PROGRESS — implementation and smoke testing complete; formal OOF training not run**
+Status: **IN PROGRESS — formal E1 five-fold training running locally**
 
 | Model | SSC | HSC | PSC | Macro Dice | Surface Dice | ASSD | HD95 | Status |
 |---|---:|---:|---:|---:|---:|---:|---:|---|
@@ -10,7 +10,7 @@ Status: **IN PROGRESS — implementation and smoke testing complete; formal OOF 
 | nnU-Net fold-0 bias-field pilot M2 | 0.785 | 0.817 | 0.794 | 0.7984 | not pooled here | not pooled here | not pooled here | COMPLETED, not OOF |
 | Residual nnU-Net |  |  |  |  |  |  |  | GPU PROBE PASSED; OOF NOT RUN |
 | High-depth-resolution nnU-Net |  |  |  |  |  |  |  | GPU PROBE PASSED; OOF NOT RUN |
-| V2 final OOF |  |  |  |  |  |  |  | NOT RUN |
+| V2 final OOF |  |  |  |  |  |  |  | RUNNING: E1 fold 0 |
 | V2 frozen external |  |  |  |  |  |  |  | BLOCKED: model not frozen |
 
 The fold-0 pilots used one 30-patient validation set and must not be labelled
@@ -24,10 +24,13 @@ OOF ablations exist.
   plain/residual/high-depth-resolution planning; CUDA forward/backward probes;
   E5/E6 loss gradient smoke tests; frozen-external gate test; 30-patient V1
   exposed-external top/bottom failure selection with 60 local tri-planar overlays.
-- **NOT RUN:** formal E1/E2/E4/E5/E6 five-fold training and OOF evaluation. At the
-  observed 51 minutes per epoch-fold, even five epochs across five folds is about
-  21 GPU-hours for E1 on the GTX 1660 Ti; E2 has 101.6 million parameters and is
-  expected to be slower. Shorter pilots cannot honestly establish the 0.83 target.
+- **RUNNING:** formal E1 uses the native 1000-epoch nnU-Net schedule, fixed
+  patient-level folds 0-4 in serial order, native CUDA mixed precision and a
+  one-epoch checkpoint interval. The detached worker was launched on 2026-08-31;
+  live PIDs, logs and checkpoints remain local and Git-ignored.
+- **NOT RUN:** formal E2/E4/E5/E6 five-fold training. Stage B is considered only
+  after the E1 OOF summary is available and is triggered by an internal OOF macro
+  Dice below 0.83, never by external performance.
 - **BLOCKED:** final model selection, `MODEL_FREEZE.md`, V2 external evaluation,
   paired Dice waterfall, internal OOF failure cases and morphology-fidelity
   comparisons. The external gate returned the expected blocked status.

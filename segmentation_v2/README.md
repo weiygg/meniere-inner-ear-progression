@@ -26,8 +26,10 @@ from the clinical P-EBM workflow. V1 scripts, checkpoints and results are preser
 - CUDA smoke test: PASSED for the multiclass nnU-Net E1/M1-M3 trainer variants.
 - Residual Encoder nnU-Net E2 planning: COMPLETED; a batch-1 mixed-precision GPU
   forward/backward probe is required before it is called trainable on 6 GB VRAM.
-- Formal five-fold OOF training: NOT RUN; compute estimate is about 21 GPU-hours for
-  five epochs x five folds on the current GTX 1660 Ti.
+- Formal E1 five-fold OOF training: **RUNNING LOCALLY** since 2026-08-31. It uses
+  the native nnU-Net 1000-epoch schedule, serial folds 0-4, mixed precision and a
+  one-epoch checkpoint interval. Runtime state, logs, PIDs, predictions and weights
+  are local/Git-ignored.
 - `MODEL_FREEZE.md`: NOT FROZEN. External evaluation is blocked.
 
 ## Reproducible commands
@@ -51,5 +53,21 @@ nnUNetv2_plan_experiment -d 502 -pl nnUNetPlannerResEncM
 python segmentation_v2\scripts\probe_residual_gpu.py --nnunet-raw <ascii-raw-root> --nnunet-preprocessed <ascii-preprocessed-root> --nnunet-results <ascii-results-root> --output segmentation_v2\results\residual_gpu_probe.json
 ```
 
-`cv_split.csv`, `splits_final.json`, run logs, predictions and weights are local
+## Detached local formal training
+
+The worker automatically skips completed folds, resumes `checkpoint_latest.pth`,
+runs folds sequentially, evaluates each fold, and produces patient-clustered OOF
+metrics after fold 4. It never loads external labels.
+
+```powershell
+.\segmentation_v2\check_training_status.ps1
+.\segmentation_v2\stop_training.ps1
+.\segmentation_v2\resume_training.ps1
+```
+
+`stop_training.ps1` targets only PIDs recorded for this project. It requests a
+Windows console interrupt so the trainer can save `checkpoint_latest.pth`; a forced
+stop is used only if that graceful request times out.
+
+`cv_split.csv`, `splits_final.json`, environment/state files, run logs, predictions and weights are local
 protected/generated artifacts and are intentionally ignored by Git.

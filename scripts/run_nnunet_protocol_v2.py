@@ -4,14 +4,16 @@ import argparse
 import json
 import os
 import platform
+import signal
 import sys
+import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 
 
-def main() -> None:
+def main() -> int:
     parser = argparse.ArgumentParser(description="Run locked-split nnU-Net experiments on LS_SEG_200 only.")
-    parser.add_argument("experiment", choices=("M1", "M2", "M3", "E2", "E4", "E5", "E6"))
+    parser.add_argument("experiment", choices=("E1", "M1", "M2", "M3", "E2", "E4", "E5", "E6"))
     parser.add_argument("--nnunet-raw", type=Path, required=True)
     parser.add_argument("--nnunet-preprocessed", type=Path, required=True)
     parser.add_argument("--nnunet-results", type=Path, required=True)
@@ -19,6 +21,12 @@ def main() -> None:
     parser.add_argument("--fold", type=int, default=0)
     parser.add_argument("--plans", default="nnUNetPlans")
     parser.add_argument("--batch-size", type=int, default=None)
+    parser.add_argument(
+        "--save-every",
+        type=int,
+        default=None,
+        help="Checkpoint interval in epochs. Formal local training uses 1 for robust resume.",
+    )
     parser.add_argument("--device", choices=("cuda", "cpu"), default="cuda")
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--continue-training", action="store_true")
@@ -50,6 +58,7 @@ def main() -> None:
     )
 
     trainer_classes = {
+        "E1": nnUNetTrainer,
         "M1": nnUNetTrainer,
         "M2": nnUNetTrainerProtocolV2M2,
         "M3": nnUNetTrainerProtocolV2M3,
@@ -78,6 +87,7 @@ def main() -> None:
         "trainer": trainer_classes[args.experiment].__name__,
         "plans": args.plans,
         "batch_size_override": args.batch_size,
+        "checkpoint_interval_epochs": args.save_every,
         "model_selection_source": "LS_SEG_200_validation_only",
         "external_labels_loaded": False,
         "run_mode": "equal_budget_internal_pilot" if args.num_epochs is not None else "full_default",
@@ -105,13 +115,58 @@ def main() -> None:
         if args.batch_size < 1:
             raise ValueError("--batch-size must be positive")
         trainer.batch_size = args.batch_size
-    maybe_load_checkpoint(trainer, args.continue_training, False, None)
-    trainer.run_training()
-    trainer.perform_actual_validation(save_probabilities=True)
-    manifest["status"] = "complete"
-    manifest["completed_utc"] = datetime.now(timezone.utc).isoformat()
-    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    if args.save_every is not None:
+        if args.save_every < 1:
+            raise ValueError("--save-every must be positive")
+        trainer.save_every = args.save_every
+
+    def write_manifest(status: str, **extra: object) -> None:
+        manifest["status"] = status
+        manifest["last_update_utc"] = datetime.now(timezone.utc).isoformat()
+        manifest.update(extra)
+        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+    def save_interrupt_checkpoint(signum: int, _frame: object) -> None:
+        checkpoint = Path(trainer.output_folder) / "checkpoint_latest.pth"
+        saved = False
+        error = None
+        try:
+            if getattr(trainer, "was_initialized", False):
+                trainer.save_checkpoint(str(checkpoint))
+                saved = checkpoint.exists()
+        except Exception as exc:  # best effort during a Windows console signal
+            error = f"{type(exc).__name__}: {exc}"
+        write_manifest(
+            "interrupted",
+            interrupt_signal=signum,
+            checkpoint=str(checkpoint) if saved else None,
+            checkpoint_error=error,
+        )
+        raise KeyboardInterrupt
+
+    signal.signal(signal.SIGINT, save_interrupt_checkpoint)
+    if hasattr(signal, "SIGBREAK"):
+        signal.signal(signal.SIGBREAK, save_interrupt_checkpoint)
+    try:
+        maybe_load_checkpoint(trainer, args.continue_training, False, None)
+        write_manifest("running", resolved_num_epochs=trainer.num_epochs, save_every=trainer.save_every)
+        trainer.run_training()
+        trainer.perform_actual_validation(save_probabilities=True)
+    except KeyboardInterrupt:
+        if manifest.get("status") != "interrupted":
+            save_interrupt_checkpoint(int(signal.SIGINT), None)
+        return 130
+    except Exception as exc:
+        write_manifest(
+            "failed",
+            error_type=type(exc).__name__,
+            error=str(exc),
+            traceback=traceback.format_exc(),
+        )
+        raise
+    write_manifest("complete", completed_utc=datetime.now(timezone.utc).isoformat())
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

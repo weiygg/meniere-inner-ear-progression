@@ -67,6 +67,7 @@ xjj内耳分割2/
 # Segmentation V2 patient-level folds and generated predictions stay local.
 segmentation_v2/splits/*.json
 segmentation_v2/results/
+segmentation_v2/logs/
 
 # Images may contain patient-derived screenshots or identifiers
 *.png

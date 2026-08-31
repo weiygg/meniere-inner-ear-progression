@@ -1,0 +1,23 @@
+version: 1
+experiment_id: E1
+status: ready_for_detached_formal_training
+dataset: Dataset502_LSSemicircularCanalsV2
+dataset_namespace: LS_SEG_200
+configuration: 3d_fullres
+plans: nnUNetPlans
+trainer: nnUNetTrainer
+schedule:
+  epochs: 1000
+  source: nnUNet_v2_default
+  screening: false
+  serial_folds: [0, 1, 2, 3, 4]
+checkpoint:
+  interval_epochs: 1
+  auto_resume_latest: true
+compute:
+  mixed_precision: nnUNet_v2_native_cuda_grad_scaler
+  data_augmentation_workers: nnUNet_v2_default_12_previously_run_successfully_on_this_host
+selection:
+  unit: patient
+  primary_metric: five_fold_oof_macro_dice
+  external_labels_allowed: false
