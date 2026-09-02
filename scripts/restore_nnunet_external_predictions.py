@@ -43,6 +43,11 @@ def main() -> int:
     parser.add_argument("--prediction-dir", type=Path, required=True)
     parser.add_argument("--metadata", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument(
+        "--inference-source",
+        default="internally_selected_M2_nnunet_frozen_evaluation",
+        help="Auditable model/run label written to the protected prediction manifests.",
+    )
     args = parser.parse_args()
 
     metadata = json.loads(args.metadata.read_text(encoding="utf-8"))
@@ -73,7 +78,7 @@ def main() -> int:
                     "study_id": record["study_id"],
                     "ear_side": record["ear_side"],
                     "structure": structure,
-                    "inference_source": "internally_selected_M2_nnunet_frozen_evaluation",
+                    "inference_source": args.inference_source,
                     "predicted_voxels": int(full_mask.sum()),
                     "mask_path": str(output.resolve()),
                 }

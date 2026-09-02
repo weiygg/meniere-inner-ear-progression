@@ -90,6 +90,10 @@ def main() -> int:
     parser.add_argument("--manifest-center3", type=Path, required=True)
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument(
+        "--model-label",
+        default="M2 nnU-Net v2 scanner-robust five-epoch equal-budget pilot",
+    )
     parser.add_argument("--bootstrap", type=int, default=5000)
     parser.add_argument("--seed", type=int, default=20260829)
     args = parser.parse_args()
@@ -151,7 +155,7 @@ def main() -> int:
     pooled = bootstrap_summary(all_rows, args.bootstrap, args.seed + 4)
     result = {
         "status": "complete",
-        "model": "M2 nnU-Net v2 scanner-robust five-epoch equal-budget pilot",
+        "model": args.model_label,
         "checkpoint_rule": "checkpoint_final_consistent_with_internal_validation_summary",
         "checkpoint_sha256": sha256(args.checkpoint),
         "selection_source": "LS_SEG_200_internal_validation_only",

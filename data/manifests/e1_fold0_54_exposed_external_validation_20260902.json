@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "status": "complete_exploratory_exposed_external_benchmark",
+  "date": "2026-09-02",
+  "model": "Formal E1 fold 0, 54 completed epochs",
+  "checkpoint_sha256": "689deb46e5628393591334793576516a6901ac39d98703376a3b1d86ae074c0e",
+  "selection_source": "LS_SEG_200_internal_validation_only",
+  "external_labels_loaded_during_training_or_selection": false,
+  "external_status": "previously_exposed_same_institution_strata_not_new_confirmatory_validation",
+  "bootstrap_unit": "patient",
+  "bootstrap_repetitions": 5000,
+  "internal_fold_0": {
+    "people": 40,
+    "ears": 80,
+    "macro_dice": 0.8153111610902865
+  },
+  "center_2": {
+    "people": 25,
+    "ears": 50,
+    "dice": {
+      "SSC": 0.6802337419563393,
+      "HSC": 0.6879822648909146,
+      "PSC": 0.621412681141106,
+      "macro": [0.6632095626627869, 0.6331968312131004, 0.6939240911826021]
+    }
+  },
+  "center_3": {
+    "people": 25,
+    "ears": 50,
+    "dice": {
+      "SSC": 0.6841438272520175,
+      "HSC": 0.7475429697729097,
+      "PSC": 0.6690960491815693,
+      "macro": [0.7002609487354988, 0.6869832758603702, 0.7129763798382674]
+    }
+  },
+  "pooled": {
+    "people": 50,
+    "ears": 100,
+    "masks": 300,
+    "dice": {
+      "SSC": [0.6821887846041784, 0.6637711531819209, 0.69957412021292],
+      "HSC": [0.717762617331912, 0.6989726450167575, 0.7357760888202745],
+      "PSC": [0.6452543651613378, 0.6229042642958249, 0.6672870905494552],
+      "macro": [0.6817352556991428, 0.664270822592884, 0.6986574325752133]
+    },
+    "macro_hd95_mm": 0.6434394704435927,
+    "macro_assd_mm": 0.2084654333673405,
+    "macro_surface_dice_1mm": 0.9875893880668591
+  },
+  "paired_candidate_minus_m2_macro_dice": {
+    "center_2": [0.0078109358714878565, 0.002802540386304273, 0.013185103401169476],
+    "center_3": [0.016516874497977837, 0.009099069142820456, 0.025241045075211705],
+    "pooled": [0.012163905184732848, 0.007362323075829953, 0.017463369650790452]
+  },
+  "target_external_macro_dice": 0.78,
+  "target_reached": false,
+  "protected_outputs_uploaded": false
+}
