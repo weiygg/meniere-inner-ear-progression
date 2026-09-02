@@ -1,6 +1,6 @@
 # Protocol V2 implementation status
 
-Date: 2026-08-29
+Date: 2026-09-02
 
 | Area | Status | Evidence / next gate |
 |---|---|---|
@@ -18,6 +18,7 @@ Date: 2026-08-29
 | M3 training | equal-budget pilot completed/not selected | 5 epochs; internal macro Dice 0.7957 (95% CI 0.7873-0.8038); fixed M2 augmentation plus 0.1 soft-clDice |
 | Current external 50 | locked exposed evaluation completed | selected M2 pooled macro Dice 0.6696 (95% CI 0.6527-0.6867); Center 2 0.6554 and Center 3 0.6837; target 0.78 not reached; forbidden as a selection source |
 | Formal E1 fold-0 rapid benchmark | completed/exploratory | 54-epoch checkpoint; internal fold-0 macro Dice 0.8153; exposed-external pooled macro Dice 0.6817 (95% CI 0.6643-0.6987), paired +0.0122 vs M2; target 0.78 not reached; folds 1-4 incomplete |
+| Formal E1 predicted-mask features | completed/exploratory | 50 people/100 ears/300 masks; 300 basic-shape rows, 299/300 centerlines passing QC, 298 plane angles, and 450 bilateral-asymmetry rows; patient-level workbook remains local; GitHub artifact is aggregate-only |
 | Blinded inter-reader sampling | script implemented | patient UID output remains local and ignored |
 | Geometry reliability | continuous estimates completed | 50 people/100 ears/300 mask pairs; patient-clustered bootstrap 5,000; formal pass threshold remains blocked |
 | P-EBM eligibility | schema-only audit completed | 73 variable rows audited; 0 eligible primary events and 73 blocked rows; final fit remains blocked |

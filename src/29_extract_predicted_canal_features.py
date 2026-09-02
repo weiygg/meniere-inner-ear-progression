@@ -33,6 +33,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Extract morphometry from frozen external predicted canal masks.")
     parser.add_argument("--mask-root", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--center2-manifest", type=Path)
+    parser.add_argument("--center3-manifest", type=Path)
     return parser.parse_args()
 
 
@@ -43,6 +45,21 @@ def write_csv(path: Path, rows: list[dict]) -> None:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
+
+
+def read_center_map(center2_manifest: Path | None, center3_manifest: Path | None) -> dict[str, str]:
+    result: dict[str, str] = {}
+    for label, path in (("Center 2", center2_manifest), ("Center 3", center3_manifest)):
+        if path is None:
+            continue
+        with path.open(encoding="utf-8-sig", newline="") as handle:
+            for row in csv.DictReader(handle):
+                study_id = row["study_id"].zfill(3)
+                previous = result.get(study_id)
+                if previous is not None and previous != label:
+                    raise RuntimeError(f"Study {study_id} occurs in both external strata")
+                result[study_id] = label
+    return result
 
 
 def angle_degrees(a: np.ndarray, b: np.ndarray) -> float:
@@ -70,11 +87,12 @@ def cropped_mask_path(source_path: Path, temporary_root: Path, index: int) -> Pa
 def main() -> None:
     args = parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
+    center_by_study = read_center_map(args.center2_manifest, args.center3_manifest)
     features = []
     centerlines = []
     errors = []
-    normals: dict[tuple[str, str], dict[str, np.ndarray]] = defaultdict(dict)
-    by_study_structure: dict[tuple[str, str], dict[str, dict]] = defaultdict(dict)
+    normals: dict[tuple[str, str, str], dict[str, np.ndarray]] = defaultdict(dict)
+    by_study_structure: dict[tuple[str, str, str], dict[str, dict]] = defaultdict(dict)
     files = sorted(args.mask_root.glob("sub*/*.nii.gz"))
     temporary_context = tempfile.TemporaryDirectory(prefix="canal_feature_crops_")
     temporary_root = Path(temporary_context.name)
@@ -85,13 +103,14 @@ def main() -> None:
         study_id = match.group("study")
         side = match.group("side").upper()
         structure = match.group("structure").upper()
+        cohort = center_by_study.get(study_id.zfill(3), "Z2_external_predicted")
         try:
             calculation_path = cropped_mask_path(path, temporary_root, index)
             feat, binary, spacing, affine = basic_features(calculation_path)
             axes = feat["principal_axis_lengths_mm"]
             centroid = feat["centroid_mm"]
             feature_row = {
-                "cohort": "Z2_external_predicted",
+                "cohort": cohort,
                 "study_id": study_id,
                 "ear_side": side,
                 "structure": structure,
@@ -112,10 +131,11 @@ def main() -> None:
                 "mask_path": str(path.resolve()),
             }
             features.append(feature_row)
-            by_study_structure[(study_id, structure)][side] = feature_row
+            by_study_structure[(cohort, study_id, structure)][side] = feature_row
         except Exception as exc:
             errors.append(
                 {
+                    "cohort": cohort,
                     "study_id": study_id,
                     "ear_side": side,
                     "structure": structure,
@@ -130,7 +150,7 @@ def main() -> None:
             normal = canal["plane_normal"]
             centerlines.append(
                 {
-                    "cohort": "Z2_external_predicted",
+                    "cohort": cohort,
                     "study_id": study_id,
                     "ear_side": side,
                     "structure": structure,
@@ -151,11 +171,11 @@ def main() -> None:
                     "closed_loop_skeleton": canal["closed_loop_skeleton"],
                 }
             )
-            normals[(study_id, side)][structure] = np.asarray(normal)
+            normals[(cohort, study_id, side)][structure] = np.asarray(normal)
         except Exception as exc:
             centerlines.append(
                 {
-                    "cohort": "Z2_external_predicted",
+                    "cohort": cohort,
                     "study_id": study_id,
                     "ear_side": side,
                     "structure": structure,
@@ -165,6 +185,7 @@ def main() -> None:
             )
             errors.append(
                 {
+                    "cohort": cohort,
                     "study_id": study_id,
                     "ear_side": side,
                     "structure": structure,
@@ -178,11 +199,11 @@ def main() -> None:
     temporary_context.cleanup()
 
     angles = []
-    for (study_id, side), structure_normals in sorted(normals.items()):
+    for (cohort, study_id, side), structure_normals in sorted(normals.items()):
         for a, b in itertools.combinations(sorted(structure_normals), 2):
             angles.append(
                 {
-                    "cohort": "Z2_external_predicted",
+                    "cohort": cohort,
                     "study_id": study_id,
                     "ear_side": side,
                     "canal_a": a,
@@ -192,7 +213,7 @@ def main() -> None:
             )
 
     asymmetry = []
-    for (study_id, structure), sides in sorted(by_study_structure.items()):
+    for (cohort, study_id, structure), sides in sorted(by_study_structure.items()):
         if not {"L", "R"}.issubset(sides):
             continue
         for metric in ("volume_mm3", "surface_area_mm2", "maximum_3d_diameter_mm"):
@@ -201,7 +222,7 @@ def main() -> None:
             mean = (abs(left) + abs(right)) / 2.0
             asymmetry.append(
                 {
-                    "cohort": "Z2_external_predicted",
+                    "cohort": cohort,
                     "study_id": study_id,
                     "structure": structure,
                     "metric": metric,
@@ -232,6 +253,10 @@ def main() -> None:
         "plane_angle_rows": len(angles),
         "bilateral_asymmetry_rows": len(asymmetry),
         "error_rows": len(errors),
+        "center_label_counts": {
+            label: sum(row["cohort"] == label for row in features)
+            for label in sorted({str(row["cohort"]) for row in features})
+        },
         "interpretation_boundary": (
             "All Zhejiang Second Hospital features are derived from model-predicted masks and "
             "must be filtered by mask and centerline QC before clinical/statistical use."
