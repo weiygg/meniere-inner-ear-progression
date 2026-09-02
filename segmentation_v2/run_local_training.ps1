@@ -1,6 +1,7 @@
 param(
     [string]$RunRoot = (Join-Path $env:USERPROFILE 'CodexRuns\meniere_segmentation_v2'),
-    [string]$PythonExe = ''
+    [string]$PythonExe = '',
+    [int]$EpochCap = 54
 )
 
 $ErrorActionPreference = 'Stop'
@@ -25,7 +26,8 @@ $arguments = @(
     '-ExecutionPolicy', 'Bypass',
     '-File', ('"{0}"' -f $workerScript),
     '-RunRoot', ('"{0}"' -f $RunRoot),
-    '-PythonExe', ('"{0}"' -f $PythonExe)
+    '-PythonExe', ('"{0}"' -f $PythonExe),
+    '-EpochCap', $EpochCap
 ) -join ' '
 $worker = Start-Process -FilePath 'powershell.exe' `
     -ArgumentList $arguments `

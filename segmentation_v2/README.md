@@ -26,8 +26,11 @@ from the clinical P-EBM workflow. V1 scripts, checkpoints and results are preser
 - CUDA smoke test: PASSED for the multiclass nnU-Net E1/M1-M3 trainer variants.
 - Residual Encoder nnU-Net E2 planning: COMPLETED; a batch-1 mixed-precision GPU
   forward/backward probe is required before it is called trainable on 6 GB VRAM.
-- Formal E1 five-fold OOF training: **RUNNING LOCALLY** since 2026-08-31. It uses
-  the native nnU-Net 1000-epoch schedule, serial folds 0-4, mixed precision and a
+- Formal E1 five-fold OOF training: **RUNNING LOCALLY**. Fold 0 completed on
+  2026-09-02 (40 patients/80 ears; internal Macro Dice 0.8153), and fold 1 is
+  running. The workflow uses
+  a fixed 54-epoch compute cap with the native nnU-Net 1000-epoch learning-rate
+  schedule horizon, serial folds 0-4, mixed precision and a
   one-epoch checkpoint interval. Runtime state, logs, PIDs, predictions and weights
   are local/Git-ignored.
 - `MODEL_FREEZE.md`: NOT FROZEN. External evaluation is blocked.

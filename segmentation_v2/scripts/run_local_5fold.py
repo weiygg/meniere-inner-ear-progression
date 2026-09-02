@@ -186,14 +186,16 @@ def checkpoint_in(folder: Path) -> Path | None:
     return None
 
 
-def initial_state(experiment: str, worker_pid: int | None) -> dict[str, object]:
+def initial_state(experiment: str, worker_pid: int | None, epoch_cap: int) -> dict[str, object]:
     return {
         "schema_version": 1,
         "experiment": experiment,
         "fold": 0,
         "status": "NOT_STARTED",
         "epoch": 0,
-        "total_epochs": 1000,
+        "total_epochs": epoch_cap,
+        "native_schedule_epochs": 1000,
+        "training_policy": "native_schedule_fixed_compute_cap",
         "metric_scope": "online_validation_pseudo_dice_until_full_fold_validation",
         "current_macro_dice": None,
         "best_macro_dice": None,
@@ -225,11 +227,14 @@ def main() -> int:
     parser.add_argument("--python", type=Path, default=Path(sys.executable))
     parser.add_argument("--experiment", default="E1", choices=("E1", "E2"))
     parser.add_argument("--plans", default="nnUNetPlans")
+    parser.add_argument("--epoch-cap", type=int, default=54)
     parser.add_argument("--poll-seconds", type=int, default=30)
     parser.add_argument("--worker-pid", type=int)
     args = parser.parse_args()
     if args.poll_seconds < 5:
         raise ValueError("--poll-seconds must be at least 5")
+    if args.epoch_cap < 1 or args.epoch_cap > 1000:
+        raise ValueError("--epoch-cap must be between 1 and 1000")
 
     raw_root = args.run_root / "raw"
     preprocessed_root = args.run_root / "preprocessed"
@@ -249,7 +254,7 @@ def main() -> int:
         ROOT / "segmentation_v2" / "splits" / "cv_split.csv",
     )
     atomic_json(local_results / "local_data_audit.json", audit)
-    state = initial_state(args.experiment, args.worker_pid)
+    state = initial_state(args.experiment, args.worker_pid, args.epoch_cap)
     if state_path.exists():
         previous = json.loads(state_path.read_text(encoding="utf-8"))
         if previous.get("experiment") == args.experiment:
@@ -292,6 +297,8 @@ def main() -> int:
             str(run_dir),
             "--save-every",
             "1",
+            "--native-schedule-epoch-cap",
+            str(args.epoch_cap),
         ]
         if checkpoint is not None:
             command.append("--continue-training")
@@ -408,7 +415,7 @@ def main() -> int:
         fold_state.update(
             {
                 "status": "COMPLETED",
-                "epoch": 1000,
+                "epoch": args.epoch_cap,
                 "best_macro_dice": fold_summary["macro_dice"],
                 "checkpoint": str(folder / "checkpoint_final.pth"),
                 "completed_time": now(),
@@ -440,7 +447,7 @@ def main() -> int:
         {
             "status": "COMPLETED",
             "fold": 4,
-            "epoch": 1000,
+            "epoch": args.epoch_cap,
             "current_macro_dice": oof["metrics"]["Macro"]["dice"]["estimate"],
             "best_macro_dice": oof["metrics"]["Macro"]["dice"]["estimate"],
             "pid": None,

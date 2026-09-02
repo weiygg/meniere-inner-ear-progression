@@ -36,7 +36,18 @@ def main() -> int:
         default=None,
         help="Optional fixed equal-budget pilot cap. Omit for the nnU-Net default.",
     )
+    parser.add_argument(
+        "--native-schedule-epoch-cap",
+        type=int,
+        default=None,
+        help=(
+            "Stop after this many epochs while retaining the native nnU-Net learning-rate "
+            "schedule horizon. This is intended for a fixed compute-budget formal run."
+        ),
+    )
     args = parser.parse_args()
+    if args.num_epochs is not None and args.native_schedule_epoch_cap is not None:
+        raise ValueError("--num-epochs and --native-schedule-epoch-cap are mutually exclusive")
 
     os.environ["nnUNet_raw"] = str(args.nnunet_raw.resolve())
     os.environ["nnUNet_preprocessed"] = str(args.nnunet_preprocessed.resolve())
@@ -90,8 +101,15 @@ def main() -> int:
         "checkpoint_interval_epochs": args.save_every,
         "model_selection_source": "LS_SEG_200_validation_only",
         "external_labels_loaded": False,
-        "run_mode": "equal_budget_internal_pilot" if args.num_epochs is not None else "full_default",
+        "run_mode": (
+            "equal_budget_internal_pilot"
+            if args.num_epochs is not None
+            else "native_schedule_fixed_compute_cap"
+            if args.native_schedule_epoch_cap is not None
+            else "full_default"
+        ),
         "num_epochs": args.num_epochs,
+        "native_schedule_epoch_cap": args.native_schedule_epoch_cap,
         "python": platform.python_version(),
         "torch": torch.__version__,
         "device": str(device),
@@ -111,6 +129,11 @@ def main() -> int:
         if args.num_epochs < 1:
             raise ValueError("--num-epochs must be positive")
         trainer.num_epochs = args.num_epochs
+    if args.native_schedule_epoch_cap is not None:
+        if args.native_schedule_epoch_cap < 1:
+            raise ValueError("--native-schedule-epoch-cap must be positive")
+        if args.native_schedule_epoch_cap > trainer.num_epochs:
+            raise ValueError("--native-schedule-epoch-cap cannot exceed the native schedule horizon")
     if args.batch_size is not None:
         if args.batch_size < 1:
             raise ValueError("--batch-size must be positive")
@@ -148,8 +171,26 @@ def main() -> int:
     if hasattr(signal, "SIGBREAK"):
         signal.signal(signal.SIGBREAK, save_interrupt_checkpoint)
     try:
+        # Initialize before applying the compute cap so configure_optimizers retains the
+        # native nnU-Net schedule horizon. This also makes resumed and new folds use the
+        # same LR trajectory for every completed epoch.
+        if args.native_schedule_epoch_cap is not None and not trainer.was_initialized:
+            trainer.initialize()
         maybe_load_checkpoint(trainer, args.continue_training, False, None)
-        write_manifest("running", resolved_num_epochs=trainer.num_epochs, save_every=trainer.save_every)
+        native_schedule_epochs = trainer.num_epochs
+        if args.native_schedule_epoch_cap is not None:
+            if trainer.current_epoch > args.native_schedule_epoch_cap:
+                raise RuntimeError(
+                    f"Checkpoint is already at epoch {trainer.current_epoch}, beyond the requested "
+                    f"cap {args.native_schedule_epoch_cap}"
+                )
+            trainer.num_epochs = args.native_schedule_epoch_cap
+        write_manifest(
+            "running",
+            resolved_num_epochs=trainer.num_epochs,
+            native_schedule_epochs=native_schedule_epochs,
+            save_every=trainer.save_every,
+        )
         trainer.run_training()
         trainer.perform_actual_validation(save_probabilities=True)
     except KeyboardInterrupt:

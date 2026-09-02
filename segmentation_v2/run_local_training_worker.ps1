@@ -1,6 +1,7 @@
 param(
     [string]$RunRoot = (Join-Path $env:USERPROFILE 'CodexRuns\meniere_segmentation_v2'),
-    [string]$PythonExe = 'python'
+    [string]$PythonExe = 'python',
+    [int]$EpochCap = 54
 )
 
 $ErrorActionPreference = 'Stop'
@@ -37,6 +38,7 @@ try {
         --python $PythonExe `
         --experiment E1 `
         --plans nnUNetPlans `
+        --epoch-cap $EpochCap `
         --poll-seconds 30 `
         --worker-pid $PID
     exit $LASTEXITCODE

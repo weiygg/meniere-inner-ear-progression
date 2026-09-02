@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "status": "complete_single_internal_fold",
+  "experiment": "E1",
+  "dataset": "Dataset502_LSSemicircularCanalsV2",
+  "fold": 0,
+  "training_policy": "native_schedule_fixed_compute_cap",
+  "completed_epochs": 54,
+  "native_learning_rate_schedule_epochs": 1000,
+  "people": 40,
+  "ears": 80,
+  "masks": 240,
+  "metrics": {
+    "SSC": {
+      "dice": 0.795783846864579,
+      "surface_dice_0p5mm": 0.9799194444453339,
+      "assd_mm": 0.11849445168986436,
+      "hd95_mm": 0.44473097199696604
+    },
+    "HSC": {
+      "dice": 0.836004781715534,
+      "surface_dice_0p5mm": 0.9919054987680234,
+      "assd_mm": 0.10411380244800258,
+      "hd95_mm": 0.39638352145122785
+    },
+    "PSC": {
+      "dice": 0.8141448546907458,
+      "surface_dice_0p5mm": 0.9806973844600414,
+      "assd_mm": 0.11091653338581073,
+      "hd95_mm": 0.45577122522191704
+    },
+    "Macro": {
+      "dice": 0.8153111610902865,
+      "surface_dice_0p5mm": 0.9841741092244661,
+      "assd_mm": 0.11117492917455923,
+      "hd95_mm": 0.4322952395567036
+    }
+  },
+  "selection_source": "LS_SEG_200_internal_validation_only",
+  "external_data_loaded": false,
+  "interpretation": "Single-fold internal validation only; not five-fold OOF and not external validation."
+}

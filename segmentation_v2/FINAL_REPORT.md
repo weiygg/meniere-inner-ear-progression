@@ -8,9 +8,10 @@ Status: **IN PROGRESS — formal E1 five-fold training running locally**
 | V1 exposed external | 0.655 | 0.712 | 0.639 | 0.6688 | 0.975 | 0.207 | 0.797 | COMPLETED |
 | nnU-Net fold-0 five-epoch pilot M1 | 0.781 | 0.817 | 0.791 | 0.7964 | not pooled here | not pooled here | not pooled here | COMPLETED, not OOF |
 | nnU-Net fold-0 bias-field pilot M2 | 0.785 | 0.817 | 0.794 | 0.7984 | not pooled here | not pooled here | not pooled here | COMPLETED, not OOF |
+| Formal E1 fold 0 (54 epochs) | 0.796 | 0.836 | 0.814 | 0.8153 | 0.984 at 0.5 mm | 0.111 | 0.432 | COMPLETED, single internal fold |
 | Residual nnU-Net |  |  |  |  |  |  |  | GPU PROBE PASSED; OOF NOT RUN |
 | High-depth-resolution nnU-Net |  |  |  |  |  |  |  | GPU PROBE PASSED; OOF NOT RUN |
-| V2 final OOF |  |  |  |  |  |  |  | RUNNING: E1 fold 0 |
+| V2 final OOF |  |  |  |  |  |  |  | RUNNING: E1 fold 1; fold 0 complete |
 | V2 frozen external |  |  |  |  |  |  |  | BLOCKED: model not frozen |
 
 The fold-0 pilots used one 30-patient validation set and must not be labelled
@@ -24,9 +25,12 @@ OOF ablations exist.
   plain/residual/high-depth-resolution planning; CUDA forward/backward probes;
   E5/E6 loss gradient smoke tests; frozen-external gate test; 30-patient V1
   exposed-external top/bottom failure selection with 60 local tri-planar overlays.
-- **RUNNING:** formal E1 uses the native 1000-epoch nnU-Net schedule, fixed
+- **RUNNING:** formal E1 uses a fixed 54-epoch compute cap while retaining the
+  native 1000-epoch nnU-Net learning-rate schedule horizon, fixed
   patient-level folds 0-4 in serial order, native CUDA mixed precision and a
-  one-epoch checkpoint interval. The detached worker was launched on 2026-08-31;
+  one-epoch checkpoint interval. Fold 0 completed on 2026-09-02 with internal
+  Macro Dice 0.8153 (40 patients/80 ears); fold 1 is running. This single-fold
+  estimate is not the final five-fold OOF result. The detached worker was launched on 2026-08-31;
   live PIDs, logs and checkpoints remain local and Git-ignored.
 - **NOT RUN:** formal E2/E4/E5/E6 five-fold training. Stage B is considered only
   after the E1 OOF summary is available and is triggered by an internal OOF macro
